@@ -1,2 +1,2 @@
 # FarmOut
- A Farming Game
+Un juego de granja al estilo de Stardew Valley/Harvest Moon
