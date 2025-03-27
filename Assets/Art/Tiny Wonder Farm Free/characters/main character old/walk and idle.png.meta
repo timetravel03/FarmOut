@@ -622,7 +622,27 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      walk and idle_0: 6701976620726949782
+      walk and idle_1: 5826384306279062945
+      walk and idle_10: -570236513362320467
+      walk and idle_11: -4479482354138549827
+      walk and idle_12: -2193215749780897835
+      walk and idle_13: -7037650129288350417
+      walk and idle_14: -4286462141399480608
+      walk and idle_15: -8497508071880925989
+      walk and idle_16: -259757158487725873
+      walk and idle_17: 1887480084010099569
+      walk and idle_18: 6158482838562942929
+      walk and idle_19: -3143334862177301296
+      walk and idle_2: 478741594795794516
+      walk and idle_3: 2589492550832670464
+      walk and idle_4: -2803649036733296061
+      walk and idle_5: -6439471259157115369
+      walk and idle_6: -3276861232412707276
+      walk and idle_7: -2121842417774576500
+      walk and idle_8: 5753600170836332131
+      walk and idle_9: -2075839574807891480
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

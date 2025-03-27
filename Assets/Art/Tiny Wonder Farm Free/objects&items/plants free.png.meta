@@ -722,7 +722,31 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      plants free_0: 5214640707927695005
+      plants free_1: -7493073933449792820
+      plants free_10: 4364622087460208216
+      plants free_11: -9198211017647661331
+      plants free_12: 7660611740966990604
+      plants free_13: -261831760282506664
+      plants free_14: -3600546957704983248
+      plants free_15: 689240637109407769
+      plants free_16: 6410458881516362893
+      plants free_17: -4691750757537860289
+      plants free_18: 5686831747179217686
+      plants free_19: -4976335543103668878
+      plants free_2: -5967672503603263023
+      plants free_20: -5103701998847512290
+      plants free_21: -6894781581935135194
+      plants free_22: -4422117925148992179
+      plants free_23: -2792399119161695008
+      plants free_3: 4753408381409157624
+      plants free_4: -8963360674610236421
+      plants free_5: -4911058758729387170
+      plants free_6: -7380761422910866166
+      plants free_7: 435282911145922356
+      plants free_8: 190436279196790070
+      plants free_9: 2876862503548076407
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

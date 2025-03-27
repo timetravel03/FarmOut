@@ -497,7 +497,22 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      farm bridges free_0: 9149874043037438650
+      farm bridges free_1: 7196195242481729890
+      farm bridges free_10: -4061299509361908713
+      farm bridges free_11: -6870847162576622241
+      farm bridges free_12: 4215320856371857431
+      farm bridges free_13: -3566987448984982302
+      farm bridges free_14: 5028755802181049292
+      farm bridges free_2: 667154425978479677
+      farm bridges free_3: -1825239847731751519
+      farm bridges free_4: 3900024390796799295
+      farm bridges free_5: 6279978428476150699
+      farm bridges free_6: -1796722483035708147
+      farm bridges free_7: -620754785219992520
+      farm bridges free_8: -4603063769841487859
+      farm bridges free_9: 5222898779254833661
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
