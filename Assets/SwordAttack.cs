@@ -42,6 +42,7 @@ public class SwordAttack : MonoBehaviour
                 break;
         }
     }
+    
 
     public void AttackRight()
     {

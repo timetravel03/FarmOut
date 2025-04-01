@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     public float collisionOffset = 0.05f;
     bool canMove = true;
     public SwordAttack swordAttack;
+    public Vector2 position;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,7 +34,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        position = rigidBody.position;
     }
 
     // se llama cuando el personaje se mueve (funcion de PlayerInput)
