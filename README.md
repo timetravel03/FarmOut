@@ -8,4 +8,7 @@ Para ello seguí un tutorial básico para juegos Top-Down, que no tiene mucha re
 [2D Top Down Pixel Art RPG Game Dev in Unity 2022 ~ Crash Course Tutorial for Beginners](https://www.youtube.com/watch?v=7iYWpzL9GkM)
 
 ### 1 Abril
-Implemente una función para hacer que los enemigos sigan al jugador en un radio específico
+Implementé una función para hacer que los enemigos sigan al jugador en un radio específico
+
+### 4 Abril
+Implementé una función para que los enemigos fuera del radio de detección diambularan de forma aleatoria, cambiando de dirección en cierto intervalo y también implementé un nuevo objeto que sirve como spawn para los enemigos.

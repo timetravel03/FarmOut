@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -5,7 +7,17 @@ public class Enemy : MonoBehaviour
     Animator animator;
     Rigidbody2D slimeBody;
     Transform player;
-    float health = 5;
+    List<RaycastHit2D> castCollisions = new List<RaycastHit2D>();
+
+    float deltaCounter = 0;
+    Vector2 randomDirection;
+    bool tracking;
+
+    public ContactFilter2D movementFilter;
+    public float health = 1;
+    public float moveSpeed = 2f;
+    // usado para que el slime Origin no se mueva
+    public bool stationary = false;
     public float Health
     {
         set
@@ -26,8 +38,8 @@ public class Enemy : MonoBehaviour
     {
         Health -= damage;
         Vector2 directionToPlayer = (Vector2)player.position - slimeBody.position;
-        slimeBody.MovePosition(slimeBody.position - directionToPlayer * 0.5f);
-        print(Health.ToString());
+        //slimeBody.MovePosition(slimeBody.position - directionToPlayer * 0.5f);
+        //print(Health.ToString());
     }
 
     public void Defeated()
@@ -47,12 +59,16 @@ public class Enemy : MonoBehaviour
         animator = GetComponent<Animator>();
         slimeBody = GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        randomDirection = new Vector2((float)Random.Range(-1, 2), (float)Random.Range(-1, 2));
     }
 
     // Update is called once per frame
     void Update()
     {
+        deltaCounter += Time.deltaTime;
+        //print(deltaCounter.ToString());
         FollowFunction();
+        WanderFunction();
     }
 
     void FollowFunction()
@@ -62,17 +78,62 @@ public class Enemy : MonoBehaviour
 
         if (directionToPlayer.magnitude < 1f && !animator.GetBool("defeated"))
         {
-            animator.SetBool("moving", true);
-            // Normalizar la dirección para mantener una velocidad constante
+            tracking = true;
+
+            // Normalizar la dirección para mantener una velocidad constanteddsds
             directionToPlayer.Normalize();
 
-            // Mover el enemigo en dirección al jugador con una velocidad constante
-            float moveSpeed = 2f; // Velocidad de movimiento
-            slimeBody.MovePosition(slimeBody.position + directionToPlayer * moveSpeed * Time.deltaTime);
+            //if (TryMove(directionToPlayer))
+            {
+                // Mover el enemigo en dirección al jugador con una velocidad constante
+                slimeBody.MovePosition(slimeBody.position + directionToPlayer * moveSpeed * Time.deltaTime);
+                animator.SetBool("moving", true);
+            }
         }
         else
         {
-            animator.SetBool("moving", false);
+            tracking = false;
+        }
+    }
+
+    void WanderFunction()
+    {
+        // cada dos segundos cambia de dirección
+        if (deltaCounter >= 2f)
+        {
+            randomDirection = new Vector2(Random.Range(-1f, 2f), Random.Range(-1f, 2f));
+            deltaCounter = 0;
+        }
+        else if (!tracking) // si no esta persiguiendo al jugador, diambula
+        {
+            if (randomDirection.x < 0.5f && randomDirection.x > -0.5f && randomDirection.y < 0.5f && randomDirection.y > -0.5f)
+            {
+                animator.SetBool("moving", false);
+            }
+            else
+            {
+                slimeBody.MovePosition(slimeBody.position + randomDirection * (moveSpeed * 0.5f) * Time.deltaTime);
+                animator.SetBool("moving", true);
+            }
+        }
+
+    }
+
+    // TODO
+    private bool TryMove(Vector2 direction)
+    {
+
+        //comprueba si hay colisiones haciendo raycasting
+        int count = slimeBody.Cast(direction, movementFilter, castCollisions, moveSpeed * Time.fixedDeltaTime + 0.05f);
+        if (count == 0)
+        {
+            //mueve el personaje
+            return true;
+        }
+        else
+        {
+            // si hay colisiones no se mueve
+            return false;
         }
     }
 

@@ -46,6 +46,11 @@ public class PlayerController : MonoBehaviour
     // este metodo se llama con un intervalo consistente independientedel framerate (ex. físicas)
     private void FixedUpdate()
     {
+        Movement(); 
+    }
+
+    private void Movement()
+    {
         if (canMove)
         {
             if (movementInput != Vector2.zero)
@@ -109,7 +114,7 @@ public class PlayerController : MonoBehaviour
     public void SwordAttack()
     {
         LockMovement();
-        print(spriteRenderer.flipX);
+        //print(spriteRenderer.flipX);
         if (spriteRenderer.flipX == true)
         {
             swordAttack.AttackLeft();
