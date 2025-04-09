@@ -2,6 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,13 +16,21 @@ public class PlayerController : MonoBehaviour
     Animator animator;
     // rederizador del sprite
     SpriteRenderer spriteRenderer;
-
-    public float moveSpeed = 1f;
-    public ContactFilter2D movementFilter;
-    public float collisionOffset = 0.05f;
+    // determina si el personaje puede moverse o no
     bool canMove = true;
+
+    // velocidad de movimiento
+    public float moveSpeed = 1f;
+    // filtro de colisiones
+    public ContactFilter2D movementFilter;
+    // offset de la colision
+    public float collisionOffset = 0.05f;
+    // ataque de espada
     public SwordAttack swordAttack;
+    // posicion del personaje
     public Vector2 position;
+
+    public Tilemap tilemap;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -138,5 +147,10 @@ public class PlayerController : MonoBehaviour
     public void UnlockMovement()
     {
         canMove = true;
+    }
+
+    void LocateCurrentFacingTile()
+    {
+       
     }
 }
