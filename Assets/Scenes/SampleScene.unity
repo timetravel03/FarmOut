@@ -9520,6 +9520,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
+      propertyPath: tilemap
+      value: 
+      objectReference: {fileID: 2040628710}
+    - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
+      propertyPath: toolMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
       propertyPath: moveSpeed
       value: 1
       objectReference: {fileID: 0}

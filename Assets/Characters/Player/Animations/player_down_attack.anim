@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: player_side_attack
+  m_Name: player_down_attack
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,13 +21,13 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -5809692940870928453, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+      value: {fileID: -4024232986141084162, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
     - time: 0.1
-      value: {fileID: 2351414161340878556, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+      value: {fileID: -3551967274139903119, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
     - time: 0.2
-      value: {fileID: 6285642079362487989, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+      value: {fileID: 8113700493152974639, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
     - time: 0.3
-      value: {fileID: 3530494885523508410, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+      value: {fileID: 4819963251569588764, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -50,10 +50,10 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -5809692940870928453, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
-    - {fileID: 2351414161340878556, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
-    - {fileID: 6285642079362487989, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
-    - {fileID: 3530494885523508410, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+    - {fileID: -4024232986141084162, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+    - {fileID: -3551967274139903119, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+    - {fileID: 8113700493152974639, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
+    - {fileID: 4819963251569588764, guid: 6ccceb48e977cba4c80b8c4459f3426c, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
@@ -86,7 +86,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.4
+  - time: 0.3
     functionName: StopSwordAttack
     data: 
     objectReferenceParameter: {fileID: 0}

@@ -5,20 +5,26 @@ public class SwordAttack : MonoBehaviour
     //daño
     public float damage = 3;
 
-    //collider de la espada
-    public Collider2D swordCollider;
+    //collider de la espada (lados)
+    public Collider2D swordSideCollider;
+
+    //collider de la espada (arriba)
+    public Collider2D swordTopCollider;
+
+    //collider de la espada (abajo)
+    public Collider2D swordBottomCollider;
 
     // posicion del collider
-    Vector2 rightAttackOffset;
+    Vector2 attackOffset;
 
     //no usado aún
-    public enum AttackDirection { Left, Right }
+    public enum AttackDirection { Left, Right, Up, Down }
     public AttackDirection attackDirection;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rightAttackOffset = transform.position;
+        attackOffset = transform.position;
     }
 
     // Update is called once per frame
@@ -27,44 +33,37 @@ public class SwordAttack : MonoBehaviour
 
     }
 
-    // enum util para cuando haga el resto de animaciones (arriba y abajo) (aun no usado)
-    public void Attack()
-    {
-        switch (attackDirection)
-        {
-            case AttackDirection.Left:
-                AttackLeft();
-                break;
-            case AttackDirection.Right:
-                AttackRight();
-                break;
-            default:
-                break;
-        }
-    }
-    
-
     public void AttackRight()
     {
-        //print("attack right");
-        swordCollider.enabled = true;
-        transform.localPosition = rightAttackOffset;
+        swordSideCollider.enabled = true;
+        transform.localPosition = attackOffset;
     }
 
     public void AttackLeft()
     {
-        //print("attack left");
-
         // activa la colision de la espada
-        swordCollider.enabled = true;
-
+        swordSideCollider.enabled = true;
         // darle la vuelta al ataque
-        transform.localPosition = new Vector3(rightAttackOffset.x * -1, rightAttackOffset.y);
+        transform.localPosition = new Vector3(attackOffset.x * -1, attackOffset.y);
+    }
+
+    public void AttackUp()
+    {
+        swordTopCollider.enabled = true;
+        transform.localPosition = new Vector3(attackOffset.x, attackOffset.y);
+    }
+
+    public void AttackDown()
+    {
+        swordBottomCollider.enabled = true;
+        transform.localPosition = new Vector3(attackOffset.x, attackOffset.y);
     }
 
     public void StopAttack()
     {
-        swordCollider.enabled = false;
+        swordSideCollider.enabled = false;
+        swordTopCollider.enabled = false;
+        swordBottomCollider.enabled = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -15,7 +15,7 @@ public class Enemy : MonoBehaviour
 
     public ContactFilter2D movementFilter;
     public float health = 1;
-    public float moveSpeed = 2f;
+    public float moveSpeed = 0.5f;
     // usado para que el slime Origin no se mueva
     public bool stationary = false;
     public float Health
@@ -50,7 +50,6 @@ public class Enemy : MonoBehaviour
     public void RemoveEnemy()
     {
         Destroy(gameObject);
-
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -63,10 +62,17 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    //void Update()
+    //{
+    //    deltaCounter += Time.deltaTime;
+    //    //print(deltaCounter.ToString());
+
+    //    FollowFunction();
+    //    WanderFunction();
+    //}
+    void FixedUpdate()
     {
-        deltaCounter += Time.deltaTime;
-        //print(deltaCounter.ToString());
+        deltaCounter += Time.fixedDeltaTime; // Usar fixedDeltaTime en lugar de deltaTime
         FollowFunction();
         WanderFunction();
     }
@@ -86,7 +92,7 @@ public class Enemy : MonoBehaviour
             //if (TryMove(directionToPlayer))
             {
                 // Mover el enemigo en dirección al jugador con una velocidad constante
-                slimeBody.MovePosition(slimeBody.position + directionToPlayer * moveSpeed * Time.deltaTime);
+                slimeBody.MovePosition(slimeBody.position + directionToPlayer * (moveSpeed * 0.1f) * Time.fixedDeltaTime);
                 animator.SetBool("moving", true);
             }
         }
@@ -112,7 +118,7 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                slimeBody.MovePosition(slimeBody.position + randomDirection * (moveSpeed * 0.5f) * Time.deltaTime);
+                slimeBody.MovePosition(slimeBody.position + randomDirection * (moveSpeed * 0.1f) * Time.fixedDeltaTime);
                 animator.SetBool("moving", true);
             }
         }
