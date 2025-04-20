@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     public ContactFilter2D movementFilter;  // filtro de colisiones
     public float collisionOffset;           // offset de la colision
     public SwordAttack swordAttack;         // ataque de espada
+    public HoeTool hoeTool;                 // script de funcionamiento de la azada
+    public GameObject cropHelper;           // un cuadrado que muestra el tile que se esta seleccionando
     public Vector2 position;                // posicion del personaje
     public Tilemap tilemap;                 // Tilemap
     public ToolMode toolMode;               // Modo de herramienta del personaje
@@ -43,6 +45,8 @@ public class PlayerController : MonoBehaviour
         GUI.Label(new Rect(x, y + 30, 200, 50), $"Last Attack Direction: {lastAttackDirection}");
         GUI.Label(new Rect(x, y + 45, 200, 50), $"Int Direction: {animator.GetInteger("direction")}");
         GUI.Label(new Rect(x, y + 60, 200, 50), $"Player Location: X: {transform.position.x * 100:F0} Y: {transform.position.y * 100:F0}");
+        GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: X: {toolMode.ToString()}");
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -59,6 +63,10 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            toolMode = toolMode == ToolMode.SWORD ? ToolMode.HOE : ToolMode.SWORD;
+        }
     }
 
     // se llama cuando el personaje se mueve (funcion de PlayerInput)
@@ -73,6 +81,16 @@ public class PlayerController : MonoBehaviour
         position = rigidBody.position;
         Movement();
         Animate();
+
+        // prueba de concepto
+        if (toolMode == ToolMode.HOE)
+        {
+            cropHelper.GetComponent<SpriteRenderer>().enabled = true;
+            cropHelper.transform.position = tilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f,0.08f);
+        } else
+        {
+            cropHelper.GetComponent<SpriteRenderer>().enabled = false;
+        }
     }
 
     private void Movement()
@@ -202,7 +220,13 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            LocateCurrentFacingTile();
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                hoeTool.DeleteTile(LocateCurrentFacingTile(), tilemap);
+            } else
+            {
+                hoeTool.CreateFarmLand(LocateCurrentFacingTile(), tilemap);
+            }
         }
     }
 
@@ -226,13 +250,12 @@ public class PlayerController : MonoBehaviour
     }
 
     // Localiza la tile más cercana el la dirección del personaje y la elimina
-    void LocateCurrentFacingTile()
+    Vector3Int LocateCurrentFacingTile()
     {
-        // por la escala del tilemap y los tiles, hay transformar las coordenadas del personaje en coordenadas mas utiles
-        Vector3Int currentFacingTileLocation = new Vector3Int(Mathf.FloorToInt((transform.position.x*100)/16), Mathf.FloorToInt((transform.position.y * 100) / 16), 0);
+        Vector3Int currentFacingTileLocation = tilemap.WorldToCell(transform.position);
         switch (facingDirection)
         {
-            // las medidas están hechas un poco a ojo y necesitan refinamiento
+            // hecho a ojo
             case Direction.UP:
                 //currentFacingTileLocation.y += 1;
                 break;
@@ -248,9 +271,7 @@ public class PlayerController : MonoBehaviour
                 currentFacingTileLocation.y -= 1;
                 break;
         }
-        if (tilemap.GetTile(currentFacingTileLocation) != null)
-        {
-            tilemap.SetTile(currentFacingTileLocation, null);
-        }
+
+        return currentFacingTileLocation;
     }
 }

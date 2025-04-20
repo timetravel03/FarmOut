@@ -24,3 +24,15 @@ Para gestionar la hitbox de la espada en diferentes direcciones decidí añadir 
 Cambié el movimiento de los enemigos para que se rigiera por el fixedDeltaTime y no por el deltaTime normal, ya que su velocidad empezaba a ser errática, en el sentido de que los enemigos se movian más rápido si el personaje se movía o no, por ejemplo. No se exactamente por qué el deltaTime pudo variar tanto después de añadir un par más de hitboxes al personaje y un método de localizar tiles, tendré que investigar más.
 
 Añadí un método que permite localizar la tile más cercana al personaje en esa dirección y al atacar con la espada la elimina, eventualmente tendrá que rellenarla o cambiarla por otra, y probablemente también las de su alrededor para incluir las tiles que transicionan de unas a otras (ex. de hierba a tierra)
+
+### 19 de Abril
+
+Estuve pensando en si la lógica de la localización del tile más próximo en una dirección debería estar en el jugador o en la azada, al final me pareció más lógico que la lógica esté directamente en el jugador y que la información se le pase a los métodos de la azada que se invoquen en el Jugador, pues lo veo un poco como el "centro de operaciones" de interacción con el mundo del juego, y así me ahorro hacer superclases o algún tipo de abstracción para las demás posibles herramientas. Simplemente cogen lo necesario cuando lo necesiten, al menos de momento.
+
+Estuve pensando como gestionar el acceso al tilesheet del terreno para poder sustituar unas tiles por otras, pensé en hacer una especie de sistema de acceso en el que cargaba los tiles que necesitaba en un tilemap invisible para poder acceder en tiempo de ejecución a los tiles ya cargados, pero al final me decidí por simplemente crear una propiedad Sprite[] en la que cargo todo el tilesheet.
+
+### 20 de Abril
+
+He descubirto quen en unity hay una funcion que se llama RuleTile, que permite determinar que tiles conectan con cuales tanto en diseño como en tiempo de ejecución, pero después de varios intentos he decidido que, de momento, simplemente el terreno arado sea cuadrado y que no conecte visualmente con el resto para poder centrarme el a funcionalidad y no en aspectos visuales que puedo tratar más adelante.
+
+Ahora se puede cambiar el modo de herramienta pulsado Q entre azada y espada, y en el modo azada he añadido un pequeño cuadrado que muestra más claramente sobre que tile se está interactuando, también permite que, mientra se pulsa shift izquierdo, eliminar el terreno cultivado
