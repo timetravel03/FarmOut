@@ -10378,7 +10378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191499334766347780, guid: 76916abf6df4f964c876745bd3de5d0a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8387535907047751319, guid: 76916abf6df4f964c876745bd3de5d0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20232,7 +20232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5191499334766347780, guid: 76916abf6df4f964c876745bd3de5d0a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8387535907047751319, guid: 76916abf6df4f964c876745bd3de5d0a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20299,6 +20299,14 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
+      propertyPath: cropTilemap
+      value: 
+      objectReference: {fileID: 1627882422}
+    - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
+      propertyPath: farmlandTilemap
+      value: 
+      objectReference: {fileID: 1916292891}
     - target: {fileID: 3695399005746665263, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -1,3 +1,4 @@
+using Assets;
 using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     enum Direction { UP, DOWN, LEFT, RIGHT }
-    public enum ToolMode { SWORD, HOE }
+    public enum ToolMode { SWORD, HOE, PLANT }
 
     Vector2 movementInput;                  // valor del moviemento
     Rigidbody2D rigidBody;                  // cuerpo del personaje
@@ -17,6 +18,7 @@ public class PlayerController : MonoBehaviour
     bool canMove = true;                    // determina si el personaje puede moverse o no
     Direction facingDirection;              // direccion de movimiento
     Vector2 lastMoveDirection;
+    CropManager cropManager;
 
 
     public float moveSpeed;                 // velocidad de movimiento
@@ -26,7 +28,8 @@ public class PlayerController : MonoBehaviour
     public HoeTool hoeTool;                 // script de funcionamiento de la azada
     public GameObject cropHelper;           // un cuadrado que muestra el tile que se esta seleccionando
     public Vector2 position;                // posicion del personaje
-    public Tilemap tilemap;                 // Tilemap
+    public Tilemap farmlandTilemap;         // Tilemap
+    public Tilemap cropTilemap;             
     public ToolMode toolMode;               // Modo de herramienta del personaje
 
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
@@ -86,7 +89,7 @@ public class PlayerController : MonoBehaviour
         if (toolMode == ToolMode.HOE)
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = true;
-            cropHelper.transform.position = tilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f,0.08f);
+            cropHelper.transform.position = farmlandTilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f,0.08f);
         } else
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = false;
@@ -193,40 +196,48 @@ public class PlayerController : MonoBehaviour
     }
 
     // ataque de espada
-    public void SwordAttack()
+    public void ToolBasedInteraction()
     {
         LockMovement();
-        if (toolMode == ToolMode.SWORD)
+        switch (toolMode)
         {
-            switch (facingDirection)
-            {
-                case Direction.UP:
-                    swordAttack.AttackUp();
-                    lastAttackDirection = "UP";
-                    break;
-                case Direction.DOWN:
-                    swordAttack.AttackDown();
-                    lastAttackDirection = "DOWN";
-                    break;
-                case Direction.LEFT:
-                    swordAttack.AttackLeft();
-                    lastAttackDirection = "LEFT";
-                    break;
-                case Direction.RIGHT:
-                    swordAttack.AttackRight();
-                    lastAttackDirection = "RIGHT";
-                    break;
-            }
-        }
-        else
-        {
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                hoeTool.DeleteTile(LocateCurrentFacingTile(), tilemap);
-            } else
-            {
-                hoeTool.CreateFarmLand(LocateCurrentFacingTile(), tilemap);
-            }
+            case ToolMode.SWORD:
+                switch (facingDirection)
+                {
+                    case Direction.UP:
+                        swordAttack.AttackUp();
+                        lastAttackDirection = "UP";
+                        break;
+                    case Direction.DOWN:
+                        swordAttack.AttackDown();
+                        lastAttackDirection = "DOWN";
+                        break;
+                    case Direction.LEFT:
+                        swordAttack.AttackLeft();
+                        lastAttackDirection = "LEFT";
+                        break;
+                    case Direction.RIGHT:
+                        swordAttack.AttackRight();
+                        lastAttackDirection = "RIGHT";
+                        break;
+                }
+                break;
+            case ToolMode.HOE:
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    // estaria bien bloquear el movimiento cuando se elimina
+                    hoeTool.DeleteTile(LocateCurrentFacingTile(), farmlandTilemap);
+                }
+                else
+                {
+                    hoeTool.CreateFarmLand(LocateCurrentFacingTile(), farmlandTilemap);
+                }
+                break;
+            case ToolMode.PLANT:
+                cropManager.PlantCrop(LocateCurrentFacingTile(), CropTileData.CropType.PUMPKIN, farmlandTilemap, cropTilemap);
+                break;
+            default:
+                break;
         }
     }
 
@@ -252,7 +263,7 @@ public class PlayerController : MonoBehaviour
     // Localiza la tile más cercana el la dirección del personaje y la elimina
     Vector3Int LocateCurrentFacingTile()
     {
-        Vector3Int currentFacingTileLocation = tilemap.WorldToCell(transform.position);
+        Vector3Int currentFacingTileLocation = farmlandTilemap.WorldToCell(transform.position);
         switch (facingDirection)
         {
             // hecho a ojo

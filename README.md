@@ -29,10 +29,16 @@ Añadí un método que permite localizar la tile más cercana al personaje en es
 
 Estuve pensando en si la lógica de la localización del tile más próximo en una dirección debería estar en el jugador o en la azada, al final me pareció más lógico que la lógica esté directamente en el jugador y que la información se le pase a los métodos de la azada que se invoquen en el Jugador, pues lo veo un poco como el "centro de operaciones" de interacción con el mundo del juego, y así me ahorro hacer superclases o algún tipo de abstracción para las demás posibles herramientas. Simplemente cogen lo necesario cuando lo necesiten, al menos de momento.
 
-Estuve pensando como gestionar el acceso al tilesheet del terreno para poder sustituar unas tiles por otras, pensé en hacer una especie de sistema de acceso en el que cargaba los tiles que necesitaba en un tilemap invisible para poder acceder en tiempo de ejecución a los tiles ya cargados, pero al final me decidí por simplemente crear una propiedad Sprite[] en la que cargo todo el tilesheet.
+Estuve pensando como gestionar el acceso al tilesheet del terreno para poder sustituir unas tiles por otras, pensé en hacer una especie de sistema de acceso en el que cargaba los tiles que necesitaba en un tilemap invisible para poder acceder en tiempo de ejecución a los tiles ya cargados, pero al final me decidí por simplemente crear una propiedad TileBase en la que cargo la tile necesaria para crear tierra arada, y lo dejaré así por ahora como prueba de concepto.
 
 ### 20 de Abril
 
-He descubirto quen en unity hay una funcion que se llama RuleTile, que permite determinar que tiles conectan con cuales tanto en diseño como en tiempo de ejecución, pero después de varios intentos he decidido que, de momento, simplemente el terreno arado sea cuadrado y que no conecte visualmente con el resto para poder centrarme el a funcionalidad y no en aspectos visuales que puedo tratar más adelante.
+He descubierto quen en unity hay una funcion que se llama RuleTile, que permite determinar que tiles conectan con cuales tanto en diseño como en tiempo de ejecución, pero después de varios intentos he decidido que, de momento, simplemente el terreno arado sea cuadrado y que no conecte visualmente con el resto para poder centrarme el a funcionalidad y no en aspectos visuales que puedo tratar más adelante.
 
 Ahora se puede cambiar el modo de herramienta pulsado Q entre azada y espada, y en el modo azada he añadido un pequeño cuadrado que muestra más claramente sobre que tile se está interactuando, también permite que, mientra se pulsa shift izquierdo, eliminar el terreno cultivado
+
+### 21 de Abril
+Estoy experimentando con clases personalizadas que almacenen información sobre determinada celda de un tile map, pero aún no he conseguido mucho, incialmente pensé en gestionarlo a través de game objects, pero me gusta la idea de tener más control más adelante.
+De momento, la gestión de lo visual parece más complicado sin acceso directo a los assets que proporciona el editor, aún estoy barajando ideas.
+
+Me voy dando cuenta de que tal vez usar playercontroller como el centro de operaciones no es tan sencillo como aparenta, tengo que dedicar algo de tiempo a pensar en como organizar el código.
