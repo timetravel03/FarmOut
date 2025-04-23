@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets
 {
-    internal class CropTileData
+    public class CropTileData
     {
         public enum CropType { PUMPKIN, CARROT, TOMATO, BEAN, POTATO}
         public Vector3Int position;

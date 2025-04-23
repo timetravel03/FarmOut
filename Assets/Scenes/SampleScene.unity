@@ -12921,7 +12921,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -17
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -20145,6 +20145,55 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2060587284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2060587286}
+  - component: {fileID: 2060587285}
+  m_Layer: 0
+  m_Name: CropManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2060587285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060587284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb68ef7fb84c804699aedddec1fdd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soilTilemap: {fileID: 678403802}
+  farmlandTilemap: {fileID: 1916292891}
+  cropTilemap: {fileID: 1627882422}
+  cropSprite: {fileID: -9198211017647661331, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  farmlandSprite: {fileID: 1154439063, guid: 0d0a65fd9fdcbcd48a54972bc214518d, type: 3}
+--- !u!4 &2060587286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2060587284}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.39233157, y: -0.5792746, z: -0.0059793796}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1945701666211434529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20300,6 +20349,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
+      propertyPath: cropManager
+      value: 
+      objectReference: {fileID: 2060587285}
+    - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
       propertyPath: cropTilemap
       value: 
       objectReference: {fileID: 1627882422}
@@ -20395,3 +20448,4 @@ SceneRoots:
   - {fileID: 1945701666211434529}
   - {fileID: 1039239403}
   - {fileID: 818875190}
+  - {fileID: 2060587286}

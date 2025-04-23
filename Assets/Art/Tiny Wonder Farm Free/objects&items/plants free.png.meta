@@ -106,7 +106,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -144,7 +144,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -185,10 +185,10 @@ TextureImporter:
       name: plants free_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 79
-        width: 8
-        height: 15
+        x: 0
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -207,10 +207,10 @@ TextureImporter:
       name: plants free_1
       rect:
         serializedVersion: 2
-        x: 8
-        y: 82
-        width: 7
-        height: 9
+        x: 16
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -229,10 +229,10 @@ TextureImporter:
       name: plants free_2
       rect:
         serializedVersion: 2
-        x: 19
-        y: 81
-        width: 11
-        height: 11
+        x: 32
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -251,10 +251,10 @@ TextureImporter:
       name: plants free_3
       rect:
         serializedVersion: 2
-        x: 31
-        y: 65
-        width: 49
-        height: 31
+        x: 48
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -273,10 +273,10 @@ TextureImporter:
       name: plants free_4
       rect:
         serializedVersion: 2
-        x: 1
-        y: 69
-        width: 6
-        height: 7
+        x: 64
+        y: 80
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -295,10 +295,10 @@ TextureImporter:
       name: plants free_5
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 64
-        width: 9
-        height: 11
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -317,10 +317,10 @@ TextureImporter:
       name: plants free_6
       rect:
         serializedVersion: 2
-        x: 18
-        y: 65
-        width: 11
-        height: 8
+        x: 16
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -339,10 +339,10 @@ TextureImporter:
       name: plants free_7
       rect:
         serializedVersion: 2
-        x: 48
-        y: 65
-        width: 15
-        height: 15
+        x: 32
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -361,9 +361,9 @@ TextureImporter:
       name: plants free_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 47
-        width: 17
+        x: 48
+        y: 64
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -383,10 +383,10 @@ TextureImporter:
       name: plants free_9
       rect:
         serializedVersion: 2
-        x: 18
-        y: 49
-        width: 6
-        height: 8
+        x: 64
+        y: 64
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -405,10 +405,10 @@ TextureImporter:
       name: plants free_10
       rect:
         serializedVersion: 2
-        x: 23
-        y: 49
-        width: 6
-        height: 8
+        x: 0
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -427,9 +427,9 @@ TextureImporter:
       name: plants free_11
       rect:
         serializedVersion: 2
-        x: 32
-        y: 49
-        width: 48
+        x: 16
+        y: 48
+        width: 16
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -449,10 +449,10 @@ TextureImporter:
       name: plants free_12
       rect:
         serializedVersion: 2
-        x: 2
-        y: 33
-        width: 11
-        height: 11
+        x: 32
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -471,10 +471,10 @@ TextureImporter:
       name: plants free_13
       rect:
         serializedVersion: 2
-        x: 18
-        y: 33
-        width: 11
-        height: 8
+        x: 48
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -493,10 +493,10 @@ TextureImporter:
       name: plants free_14
       rect:
         serializedVersion: 2
-        x: 34
-        y: 33
-        width: 13
-        height: 12
+        x: 64
+        y: 48
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -515,10 +515,10 @@ TextureImporter:
       name: plants free_15
       rect:
         serializedVersion: 2
-        x: 49
-        y: 33
+        x: 0
+        y: 32
         width: 16
-        height: 15
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -537,10 +537,10 @@ TextureImporter:
       name: plants free_16
       rect:
         serializedVersion: 2
-        x: 64
-        y: 33
+        x: 16
+        y: 32
         width: 16
-        height: 15
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -559,10 +559,10 @@ TextureImporter:
       name: plants free_17
       rect:
         serializedVersion: 2
-        x: 2
-        y: 4
-        width: 6
-        height: 8
+        x: 32
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -581,10 +581,10 @@ TextureImporter:
       name: plants free_18
       rect:
         serializedVersion: 2
-        x: 5
-        y: 0
-        width: 7
-        height: 7
+        x: 48
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -603,10 +603,10 @@ TextureImporter:
       name: plants free_19
       rect:
         serializedVersion: 2
-        x: 7
-        y: 6
-        width: 6
-        height: 8
+        x: 64
+        y: 32
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -625,10 +625,10 @@ TextureImporter:
       name: plants free_20
       rect:
         serializedVersion: 2
-        x: 19
-        y: 1
-        width: 7
-        height: 10
+        x: 32
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -647,10 +647,10 @@ TextureImporter:
       name: plants free_21
       rect:
         serializedVersion: 2
-        x: 31
-        y: 1
-        width: 17
-        height: 19
+        x: 48
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -669,10 +669,10 @@ TextureImporter:
       name: plants free_22
       rect:
         serializedVersion: 2
-        x: 48
-        y: 1
-        width: 17
-        height: 28
+        x: 64
+        y: 16
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -691,10 +691,10 @@ TextureImporter:
       name: plants free_23
       rect:
         serializedVersion: 2
-        x: 64
-        y: 1
+        x: 0
+        y: 0
         width: 16
-        height: 28
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -709,11 +709,99 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: plants free_24
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57f13038a86d45a46a78bd73219d9756
+      internalID: 2039468119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plants free_25
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7faddafc29f53554a8a8d7e01185aeb1
+      internalID: 1098567186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plants free_26
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c286749244bd9440b82efced1c24c08
+      internalID: -1986439381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: plants free_27
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 145d0dac8b8c37f438535898c86bc8f6
+      internalID: -1564360506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: db5f08042f49da44da6eae20fbab9078
     internalID: 0
     vertices: []
     indices: 
@@ -740,6 +828,10 @@ TextureImporter:
       plants free_21: -6894781581935135194
       plants free_22: -4422117925148992179
       plants free_23: -2792399119161695008
+      plants free_24: 2039468119
+      plants free_25: 1098567186
+      plants free_26: -1986439381
+      plants free_27: -1564360506
       plants free_3: 4753408381409157624
       plants free_4: -8963360674610236421
       plants free_5: -4911058758729387170

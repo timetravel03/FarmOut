@@ -18,9 +18,9 @@ public class PlayerController : MonoBehaviour
     bool canMove = true;                    // determina si el personaje puede moverse o no
     Direction facingDirection;              // direccion de movimiento
     Vector2 lastMoveDirection;
-    CropManager cropManager;
 
 
+    public CropManager cropManager;
     public float moveSpeed;                 // velocidad de movimiento
     public ContactFilter2D movementFilter;  // filtro de colisiones
     public float collisionOffset;           // offset de la colision
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public GameObject cropHelper;           // un cuadrado que muestra el tile que se esta seleccionando
     public Vector2 position;                // posicion del personaje
     public Tilemap farmlandTilemap;         // Tilemap
-    public Tilemap cropTilemap;             
+    public Tilemap cropTilemap;
     public ToolMode toolMode;               // Modo de herramienta del personaje
 
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
@@ -89,8 +89,9 @@ public class PlayerController : MonoBehaviour
         if (toolMode == ToolMode.HOE)
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = true;
-            cropHelper.transform.position = farmlandTilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f,0.08f);
-        } else
+            cropHelper.transform.position = farmlandTilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f, 0.08f);
+        }
+        else
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = false;
         }
@@ -223,18 +224,25 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case ToolMode.HOE:
+                Vector3Int tempPosition = LocateCurrentFacingTile();
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     // estaria bien bloquear el movimiento cuando se elimina
-                    hoeTool.DeleteTile(LocateCurrentFacingTile(), farmlandTilemap);
+                    if (!cropManager.RemoveCrop(tempPosition))
+                    {
+                        cropManager.RemoveFarmland(tempPosition);
+                    }
                 }
                 else
                 {
-                    hoeTool.CreateFarmLand(LocateCurrentFacingTile(), farmlandTilemap);
+                    if (!cropManager.CreateFarmland(tempPosition))
+                    {
+                        cropManager.PlantCrop(tempPosition, new CropTileData(LocateCurrentFacingTile(), CropTileData.CropType.POTATO));
+                    }
                 }
                 break;
             case ToolMode.PLANT:
-                cropManager.PlantCrop(LocateCurrentFacingTile(), CropTileData.CropType.PUMPKIN, farmlandTilemap, cropTilemap);
+
                 break;
             default:
                 break;

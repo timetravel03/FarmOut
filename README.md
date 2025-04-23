@@ -42,3 +42,6 @@ Estoy experimentando con clases personalizadas que almacenen información sobre 
 De momento, la gestión de lo visual parece más complicado sin acceso directo a los assets que proporciona el editor, aún estoy barajando ideas.
 
 Me voy dando cuenta de que tal vez usar playercontroller como el centro de operaciones no es tan sencillo como aparenta, tengo que dedicar algo de tiempo a pensar en como organizar el código.
+
+### 23 de Abril
+Hoy decidí hacer una especie de gestor de tilemaps (gameobject vacio + script) que permite determinar si se puede arar o plantar, por ejemplo para arar debe ser un tile vacío en el tilemap de colisiones y para plantar debe haber un tile en esa posicion del tilemap de tierra arada. De momento solo permite quitar y poner un par de texturas determinadas. Probablemente acabe dejando la clase HoeTool por esta.
