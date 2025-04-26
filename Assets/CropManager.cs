@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Assets;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -12,12 +14,13 @@ public class CropManager : MonoBehaviour
 
     private Tile cropTile;
     private Tile farmlandTile;
+    private Dictionary<Vector3Int, CropTileData> cropData = new Dictionary<Vector3Int, CropTileData>();     // valores nulos representan terreno arado
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        cropTile = ScriptableObject.CreateInstance<Tile>();
-        cropTile.sprite = cropSprite;
+        //cropTile = ScriptableObject.CreateInstance<Tile>();
+        //cropTile.sprite = cropSprite;
 
         farmlandTile = ScriptableObject.CreateInstance<Tile>();
         farmlandTile.sprite = farmlandSprite;
@@ -28,17 +31,24 @@ public class CropManager : MonoBehaviour
     {
 
     }
-    private bool IsTileAvailable(Vector3Int pos)
+    
+
+    private bool IsSoilAvailable(Vector3Int pos)
     {
-        // debe ampliarse para acoger mas casos, como estructuras y otras cosas, de momento solo comprueba si hay tierra en esa posicion
-        return farmlandTilemap.GetTile(pos) == null;
+        return cropData.ContainsKey(pos) && cropData[pos] == null;
+    }
+
+    private bool IsSoil(Vector3Int pos)
+    {
+        return cropData.ContainsKey(pos);
     }
 
     public bool CreateFarmland(Vector3Int pos)
     {
-        if (IsTileAvailable(pos))
+        if (IsSoil(pos))
         {
             farmlandTilemap.SetTile(pos, farmlandTile);
+            cropData.Add(pos, null);
             return true;
         }
         else
@@ -47,17 +57,13 @@ public class CropManager : MonoBehaviour
         }
     }
 
-    private bool IsCropPlanted(Vector3Int pos)
-    {
-        return cropTilemap.GetTile(pos) != null;
-    }
-
     public bool PlantCrop(Vector3Int pos, CropTileData crop)
     {
         // x ahora así pero tendra su funcion propia supongo
-        if (!IsTileAvailable(pos))
+        if (!IsSoilAvailable(pos))
         {
             cropTilemap.SetTile(pos, cropTile);
+            cropData[pos] = crop;
             return true;
         }
         else
@@ -71,6 +77,7 @@ public class CropManager : MonoBehaviour
         if (cropTilemap.GetTile(pos) != null)
         {
             cropTilemap.SetTile(pos, null);
+            cropData[pos] = null;
             return true;
         }
         else
@@ -84,6 +91,7 @@ public class CropManager : MonoBehaviour
         if (farmlandTilemap.GetTile(pos) != null)
         {
             farmlandTilemap.SetTile(pos, null);
+            cropData.Remove(pos);
             return true;
         }
         else
