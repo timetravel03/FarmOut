@@ -11,19 +11,22 @@ namespace Assets
     public class CropTileData
     {
         public enum CropType { PUMPKIN, CARROT, TOMATO, BEAN, POTATO}
+
         public Vector3Int Position;
         public CropType Type;
         public int GrowthStage;
         public bool Watered;
-        public Sprite[] Sprites;
+        public Sprite[] GrowthSprites;
         public Sprite CurrentSprite;
 
-        public CropTileData(Vector3Int pos, CropType crop)
+        public CropTileData(Vector3Int pos, CropType crop, Sprite[] sprites)
         {
             Position = pos;
             Type = crop;
+            GrowthSprites = sprites;
             GrowthStage = 0;
             Watered = false;
+            CurrentSprite = GrowthSprites[GrowthStage];
         }
 
         public void GrowCrop()
@@ -31,13 +34,16 @@ namespace Assets
             if (GrowthStage < 3 && Watered)
             {
                 GrowthStage++;
-                CurrentSprite = Sprites[GrowthStage];
+                CurrentSprite = GrowthSprites[GrowthStage];
             }
         }
 
         public Tile GetTile()
         {
-            return ScriptableObject.CreateInstance<Tile>();
+            Tile tile = ScriptableObject.CreateInstance<Tile>();
+            tile.sprite = CurrentSprite;
+            //tile.sprite.
+            return tile;
         }
     }
 }

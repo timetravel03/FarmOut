@@ -8,7 +8,7 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     enum Direction { UP, DOWN, LEFT, RIGHT }
-    public enum ToolMode { SWORD, HOE, PLANT }
+    public enum ToolMode { SWORD, HOE, WATERING, PICKAXE }
 
     Vector2 movementInput;                  // valor del moviemento
     Rigidbody2D rigidBody;                  // cuerpo del personaje
@@ -32,8 +32,11 @@ public class PlayerController : MonoBehaviour
     public Tilemap cropTilemap;
     public ToolMode toolMode;               // Modo de herramienta del personaje
 
+
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
     private string lastAttackDirection = "";
+    private int toolIndex;
+    private ToolMode[] tools = new ToolMode[] { ToolMode.SWORD, ToolMode.HOE, ToolMode.WATERING };
 
     private void OnGUI()
     {
@@ -61,6 +64,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        toolIndex = 0;
     }
 
     // Update is called once per frame
@@ -68,7 +72,16 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            toolMode = toolMode == ToolMode.SWORD ? ToolMode.HOE : ToolMode.SWORD;
+            toolMode = tools[toolIndex];
+
+            if (toolIndex < tools.Length - 1)
+            {
+                toolIndex++;
+            }
+            else
+            {
+                toolIndex = 0;
+            }
         }
     }
 
@@ -78,7 +91,7 @@ public class PlayerController : MonoBehaviour
         movementInput = movementValue.Get<Vector2>();
     }
 
-    // este metodo se llama con un intervalo consistente independientedel framerate (ex. físicas)
+    // este metodo se llama con un intervalo consistente independiente del framerate (ex. físicas)
     private void FixedUpdate()
     {
         position = rigidBody.position;
@@ -86,7 +99,7 @@ public class PlayerController : MonoBehaviour
         Animate();
 
         // prueba de concepto
-        if (toolMode == ToolMode.HOE)
+        if (toolMode == ToolMode.HOE || toolMode == ToolMode.WATERING)
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = true;
             cropHelper.transform.position = farmlandTilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f, 0.08f);
@@ -200,6 +213,7 @@ public class PlayerController : MonoBehaviour
     public void ToolBasedInteraction()
     {
         LockMovement();
+        Vector3Int tempPosition = LocateCurrentFacingTile();
         switch (toolMode)
         {
             case ToolMode.SWORD:
@@ -224,7 +238,6 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case ToolMode.HOE:
-                Vector3Int tempPosition = LocateCurrentFacingTile();
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
                     // estaria bien bloquear el movimiento cuando se elimina
@@ -237,13 +250,16 @@ public class PlayerController : MonoBehaviour
                 {
                     if (!cropManager.CreateFarmland(tempPosition))
                     {
-                        cropManager.PlantCrop(tempPosition, new CropTileData(LocateCurrentFacingTile(), CropTileData.CropType.POTATO));
+                        cropManager.PlantCrop(tempPosition, CropTileData.CropType.TOMATO);
                     }
                 }
                 break;
-            case ToolMode.PLANT:
-
+            case ToolMode.WATERING:
+                cropManager.WaterTile(tempPosition);
+                cropManager.DebugMakeCropGrow(tempPosition);
                 break;
+            case ToolMode.PICKAXE:
+
             default:
                 break;
         }
@@ -251,7 +267,6 @@ public class PlayerController : MonoBehaviour
 
     public void StopSwordAttack()
     {
-        //Debug.Log("Stopped");
         UnlockMovement();
         swordAttack.StopAttack();
     }

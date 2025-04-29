@@ -44,4 +44,13 @@ De momento, la gestión de lo visual parece más complicado sin acceso directo a
 Me voy dando cuenta de que tal vez usar playercontroller como el centro de operaciones no es tan sencillo como aparenta, tengo que dedicar algo de tiempo a pensar en como organizar el código.
 
 ### 23 de Abril
-Hoy decidí hacer una especie de gestor de tilemaps (gameobject vacio + script) que permite determinar si se puede arar o plantar, por ejemplo para arar debe ser un tile vacío en el tilemap de colisiones y para plantar debe haber un tile en esa posicion del tilemap de tierra arada. De momento solo permite quitar y poner un par de texturas determinadas. Probablemente acabe dejando la clase HoeTool por esta.
+Hoy decidí hacer una especie de gestor de tilemaps, (gameobject vacio + script) que permite determinar si se puede arar o plantar, por ejemplo para arar debe ser un tile vacío en el tilemap de colisiones y para plantar debe haber un tile en esa posicion del tilemap de tierra arada. De momento solo permite quitar y poner un par de texturas determinadas.
+
+Esto me permite gestionar todos los tilemaps superpuestos más fácilmente.
+
+
+### 25-26 de Abril
+Desarrollé un poco mas la clase CropManager y CropTileData añadiendo la funcionalidad de regar la planta y que crezca. Gestiona el crecimiento de la planta con un contador y un array de sprites. 
+Para probarlo cree una función que hace que la planta crezca cada vez que se riega, hasta que llega al máximo.
+
+Decidí guardar toda la información referente a la plantación en un diccionario que usa posiciones del tilemap como claves y el Croptiledata como valor, para facilitar el acceso y el guardado de partida en un futuro.

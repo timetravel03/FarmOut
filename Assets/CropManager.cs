@@ -8,9 +8,16 @@ public class CropManager : MonoBehaviour
 {
     public Tilemap soilTilemap;     // tilemap base
     public Tilemap farmlandTilemap; // tilemap donde se crea la tierra arada
+    public Tilemap wateredTilemap;
     public Tilemap cropTilemap;     // tilemap donde se plantan los cultivos
     public Sprite cropSprite;
     public Sprite farmlandSprite;
+    public Sprite wateredFarmlandSprite;
+    public Sprite[] pumpkinSprites;
+    public Sprite[] carrotSprites;
+    public Sprite[] potatoSprites;
+    public Sprite[] tomatoSprites;
+    public Sprite[] beanSprites;
 
     private Tile cropTile;
     private Tile farmlandTile;
@@ -19,9 +26,8 @@ public class CropManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //cropTile = ScriptableObject.CreateInstance<Tile>();
-        //cropTile.sprite = cropSprite;
-
+        cropTile = ScriptableObject.CreateInstance<Tile>();
+        cropTile.sprite = cropSprite;
         farmlandTile = ScriptableObject.CreateInstance<Tile>();
         farmlandTile.sprite = farmlandSprite;
     }
@@ -31,21 +37,29 @@ public class CropManager : MonoBehaviour
     {
 
     }
-    
 
-    private bool IsSoilAvailable(Vector3Int pos)
-    {
-        return cropData.ContainsKey(pos) && cropData[pos] == null;
-    }
-
+    //determina si hay un sprite de tierra arada en el tilemap
     private bool IsSoil(Vector3Int pos)
     {
         return cropData.ContainsKey(pos);
     }
 
+    // determina si hay terreno arado y si esta disponible (no hay ningún cultivo)
+    private bool IsSoilAvailable(Vector3Int pos)
+    {
+        return cropData.ContainsKey(pos) && cropData[pos] == null;
+    }
+
+    // determina si el terreno arado tiene el sprite de agua sobrepuesto
+    public bool IsSoilWatered(Vector3Int pos)
+    {
+        return wateredTilemap.GetTile(pos) != null;
+    }
+
+    // crea terreno arado si es posible e informa si tuvo éxito
     public bool CreateFarmland(Vector3Int pos)
     {
-        if (IsSoil(pos))
+        if (!IsSoil(pos))
         {
             farmlandTilemap.SetTile(pos, farmlandTile);
             cropData.Add(pos, null);
@@ -57,13 +71,15 @@ public class CropManager : MonoBehaviour
         }
     }
 
-    public bool PlantCrop(Vector3Int pos, CropTileData crop)
+    // planta un cultivo si es posible
+    public bool PlantCrop(Vector3Int pos, CropTileData.CropType cropType)
     {
         // x ahora así pero tendra su funcion propia supongo
-        if (!IsSoilAvailable(pos))
+        if (IsSoilAvailable(pos))
         {
-            cropTilemap.SetTile(pos, cropTile);
+            CropTileData crop = new CropTileData(pos, cropType, pumpkinSprites);
             cropData[pos] = crop;
+            cropTilemap.SetTile(pos, cropData[pos].GetTile());
             return true;
         }
         else
@@ -72,9 +88,35 @@ public class CropManager : MonoBehaviour
         }
     }
 
+    // riega el terreno arado si no lo está ya
+    public void WaterTile(Vector3Int pos)
+    {
+        if (IsSoil(pos))
+        {
+            Tile temp = ScriptableObject.CreateInstance<Tile>();
+            temp.sprite = wateredFarmlandSprite;
+            wateredTilemap.SetTile(pos, temp);
+
+            if (cropData.ContainsKey(pos) && cropData[pos] != null)
+            {
+                cropData[pos].Watered = true;
+                cropData[pos].GrowCrop();
+            }
+        }
+    }
+
+    public void DebugMakeCropGrow(Vector3Int pos)
+    {
+        if (cropData.ContainsKey(pos) && cropData[pos] != null)
+        {
+            cropData[pos].GrowCrop();
+            cropTilemap.SetTile(pos, cropData[pos].GetTile());
+        }
+    }
+
     public bool RemoveCrop(Vector3Int pos)
     {
-        if (cropTilemap.GetTile(pos) != null)
+        if (cropData[pos] != null && cropTilemap.GetTile(pos) != null)
         {
             cropTilemap.SetTile(pos, null);
             cropData[pos] = null;
@@ -92,6 +134,10 @@ public class CropManager : MonoBehaviour
         {
             farmlandTilemap.SetTile(pos, null);
             cropData.Remove(pos);
+            if (wateredTilemap.GetTile(pos) != null)
+            {
+                wateredTilemap.SetTile(pos, null);
+            }
             return true;
         }
         else
