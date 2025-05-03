@@ -11,7 +11,8 @@ public class CropManager : MonoBehaviour
     public Tilemap wateredTilemap;
     public Tilemap cropTilemap;     // tilemap donde se plantan los cultivos
     public Sprite cropSprite;
-    public Sprite farmlandSprite;
+    public RuleTile farmlandRT;
+    public RuleTile wateredFarmlandRT;
     public Sprite wateredFarmlandSprite;
     public Sprite[] pumpkinSprites;
     public Sprite[] carrotSprites;
@@ -29,7 +30,7 @@ public class CropManager : MonoBehaviour
         cropTile = ScriptableObject.CreateInstance<Tile>();
         cropTile.sprite = cropSprite;
         farmlandTile = ScriptableObject.CreateInstance<Tile>();
-        farmlandTile.sprite = farmlandSprite;
+        TimeManager.OnCycleComplete += GrowPlantedCrops;
     }
 
     // Update is called once per frame
@@ -61,7 +62,7 @@ public class CropManager : MonoBehaviour
     {
         if (!IsSoil(pos))
         {
-            farmlandTilemap.SetTile(pos, farmlandTile);
+            farmlandTilemap.SetTile(pos, farmlandRT);
             cropData.Add(pos, null);
             return true;
         }
@@ -74,12 +75,13 @@ public class CropManager : MonoBehaviour
     // planta un cultivo si es posible
     public bool PlantCrop(Vector3Int pos, CropTileData.CropType cropType)
     {
-        // x ahora así pero tendra su funcion propia supongo
         if (IsSoilAvailable(pos))
         {
             CropTileData crop = new CropTileData(pos, cropType, pumpkinSprites);
+            crop.Watered = IsSoilWatered(pos);
             cropData[pos] = crop;
             cropTilemap.SetTile(pos, cropData[pos].GetTile());
+
             return true;
         }
         else
@@ -95,12 +97,11 @@ public class CropManager : MonoBehaviour
         {
             Tile temp = ScriptableObject.CreateInstance<Tile>();
             temp.sprite = wateredFarmlandSprite;
-            wateredTilemap.SetTile(pos, temp);
+            wateredTilemap.SetTile(pos, wateredFarmlandRT);
 
             if (cropData.ContainsKey(pos) && cropData[pos] != null)
             {
                 cropData[pos].Watered = true;
-                cropData[pos].GrowCrop();
             }
         }
     }
@@ -109,14 +110,25 @@ public class CropManager : MonoBehaviour
     {
         if (cropData.ContainsKey(pos) && cropData[pos] != null)
         {
-            cropData[pos].GrowCrop();
-            cropTilemap.SetTile(pos, cropData[pos].GetTile());
+            cropData[pos].GrowCrop(cropTilemap,wateredTilemap);
+        }
+    }
+
+    public void GrowPlantedCrops()
+    {
+        foreach (CropTileData crop in cropData.Values)
+        {
+            Debug.Log("Cycle Complete");
+            if (crop != null)
+            {
+                crop.GrowCrop(cropTilemap,wateredTilemap);
+            }
         }
     }
 
     public bool RemoveCrop(Vector3Int pos)
     {
-        if (cropData[pos] != null && cropTilemap.GetTile(pos) != null)
+        if (cropData.ContainsKey(pos) && cropData[pos] != null)
         {
             cropTilemap.SetTile(pos, null);
             cropData[pos] = null;
@@ -130,7 +142,7 @@ public class CropManager : MonoBehaviour
 
     public bool RemoveFarmland(Vector3Int pos)
     {
-        if (farmlandTilemap.GetTile(pos) != null)
+        if (IsSoil(pos))
         {
             farmlandTilemap.SetTile(pos, null);
             cropData.Remove(pos);

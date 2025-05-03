@@ -54,3 +54,12 @@ Desarrollé un poco mas la clase CropManager y CropTileData añadiendo la funcio
 Para probarlo cree una función que hace que la planta crezca cada vez que se riega, hasta que llega al máximo.
 
 Decidí guardar toda la información referente a la plantación en un diccionario que usa posiciones del tilemap como claves y el Croptiledata como valor, para facilitar el acceso y el guardado de partida en un futuro.
+
+### 1 de Mayo
+Cree un gameobject que gestiona el dia y noche cambiando el canal alfa de una textura negra que se sobrepone al juego y estuve investigando el sistema de eventos de unity. Tengo al idea de para que el cambio entre día y noche se produzca un evento que llame, por ejemplo, a la función que hace crecer un cultivo cuando pase un ciclo completo.
+
+### 2 de Mayo
+Decidí usar eventos normales de C# para gestionar el crecimiento de los cultivos al pasar un cicloy arregle algunos bugs de la gestion del regado.
+
+### 3 de Mayo
+Usé Tile Rules para que las celdas de tierra arada y regada conecten automaticamente, pero aún tienen unos bugs visuales.

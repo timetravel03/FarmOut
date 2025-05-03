@@ -51,8 +51,7 @@ public class PlayerController : MonoBehaviour
         GUI.Label(new Rect(x, y + 30, 200, 50), $"Last Attack Direction: {lastAttackDirection}");
         GUI.Label(new Rect(x, y + 45, 200, 50), $"Int Direction: {animator.GetInteger("direction")}");
         GUI.Label(new Rect(x, y + 60, 200, 50), $"Player Location: X: {transform.position.x * 100:F0} Y: {transform.position.y * 100:F0}");
-        GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: X: {toolMode.ToString()}");
-
+        GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: {toolMode.ToString()}");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -72,7 +71,6 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            toolMode = tools[toolIndex];
 
             if (toolIndex < tools.Length - 1)
             {
@@ -82,6 +80,8 @@ public class PlayerController : MonoBehaviour
             {
                 toolIndex = 0;
             }
+
+            toolMode = tools[toolIndex];
         }
     }
 
@@ -240,7 +240,6 @@ public class PlayerController : MonoBehaviour
             case ToolMode.HOE:
                 if (Input.GetKey(KeyCode.LeftShift))
                 {
-                    // estaria bien bloquear el movimiento cuando se elimina
                     if (!cropManager.RemoveCrop(tempPosition))
                     {
                         cropManager.RemoveFarmland(tempPosition);
@@ -256,10 +255,11 @@ public class PlayerController : MonoBehaviour
                 break;
             case ToolMode.WATERING:
                 cropManager.WaterTile(tempPosition);
-                cropManager.DebugMakeCropGrow(tempPosition);
+                //cropManager.DebugMakeCropGrow(tempPosition);
                 break;
             case ToolMode.PICKAXE:
 
+                break;
             default:
                 break;
         }
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
     }
 
-    // Localiza la tile más cercana el la dirección del personaje y la elimina
+    // Localiza la tile más cercana el la dirección del personaje
     Vector3Int LocateCurrentFacingTile()
     {
         Vector3Int currentFacingTileLocation = farmlandTilemap.WorldToCell(transform.position);

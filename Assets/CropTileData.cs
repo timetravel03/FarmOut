@@ -29,12 +29,15 @@ namespace Assets
             CurrentSprite = GrowthSprites[GrowthStage];
         }
 
-        public void GrowCrop()
+        public void GrowCrop(Tilemap cropTilemap, Tilemap waterTilemap)
         {
-            if (GrowthStage < 3 && Watered)
+            if ((GrowthStage < GrowthSprites.Length - 1) && Watered)
             {
                 GrowthStage++;
                 CurrentSprite = GrowthSprites[GrowthStage];
+                cropTilemap.SetTile(Position, GetTile());
+                waterTilemap.SetTile(Position, null);
+                Watered = false;
             }
         }
 

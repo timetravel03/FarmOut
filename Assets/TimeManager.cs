@@ -1,17 +1,28 @@
+using System;
+using System.Globalization;
 using UnityEngine;
 using static PlayerController;
 
 public class TimeManager : MonoBehaviour
 {
+    public static event Action OnCycleComplete;
     public Transform playerTransform;
     public SpriteRenderer spriteRenderer;
+    public bool DayTime { get { return daytime; } }
+    public int DayCounter { get { return daycounter; } }
+
 
     private float deltaTimer;
+    private bool reverse;
+    private bool daytime;
+    private int daycounter;
+
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         deltaTimer = 0;
+        reverse = false;
     }
 
     // Update is called once per frame
@@ -21,16 +32,34 @@ public class TimeManager : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (deltaTimer < 20f)
+        DayTimer();
+    }
+
+    private void DayTimer()
+    {
+        if (deltaTimer >= 24f)
+        {
+            reverse = true;
+        }
+
+        if (deltaTimer <= 0f)
+        {
+            reverse = false;
+            OnCycleComplete?.Invoke();
+        }
+
+        if (reverse)
+        {
+            deltaTimer -= Time.deltaTime;
+        }
+        else
         {
             deltaTimer += Time.deltaTime;
         }
-        else 
-        {
-            deltaTimer = 0;
-        }
 
-        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / 40f);
+        daytime = deltaTimer <= 12f;
+
+        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / 30f);
     }
 
     private void OnGUI()
@@ -41,6 +70,7 @@ public class TimeManager : MonoBehaviour
         float x = 10;
         float y = 10;
 
-        GUI.Label(new Rect(x, y + 90, 200, 50), $"Delta Timer: {deltaTimer.ToString()}");
+        GUI.Label(new Rect(x, y + 90, 200, 50), $"Day Timer: {deltaTimer.ToString()}");
+        GUI.Label(new Rect(x, y + 105, 200, 50), $"DayTime: {DayTime.ToString()}");
     }
 }
