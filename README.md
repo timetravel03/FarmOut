@@ -63,3 +63,4 @@ Decidí usar eventos normales de C# para gestionar el crecimiento de los cultivo
 
 ### 3 de Mayo
 Usé Tile Rules para que las celdas de tierra arada y regada conecten automaticamente, pero aún tienen unos bugs visuales.
+Después de investigar un poco acerca del sistema de Rule Tiles descubrí que el orden en el inspector afecta a cuales se usan en ciertas situaciones (una especie de situación de else-if), asi que reordené los tile rules de más a menos rules, así los rules más específicos se evalúan antes que los mas simples, que también podrían evaluar a "verdadero". También descubrí que el tileset que uso carece del algunos tiles que creo que debería tener, de momento lo dejaré así, pero lo editaré si tengo tiempo.
