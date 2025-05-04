@@ -206,7 +206,23 @@ public class PlayerController : MonoBehaviour
     // activa el trigger de la anim
     void OnFire()
     {
-        animator.SetTrigger("swordAttack");
+        switch (toolMode)
+        {
+            case ToolMode.SWORD:
+                animator.SetTrigger("swordAttack");
+                break;
+            case ToolMode.HOE:
+                animator.SetTrigger("hoeAction");
+                break;
+            case ToolMode.WATERING:
+                animator.SetTrigger("waterAction");
+                break;
+            case ToolMode.PICKAXE:
+                animator.SetTrigger("pickAction");
+                break;
+            default:
+                break;
+        }
     }
 
     // ataque de espada
@@ -294,15 +310,15 @@ public class PlayerController : MonoBehaviour
                 //currentFacingTileLocation.y += 1;
                 break;
             case Direction.DOWN:
-                currentFacingTileLocation.y -= 2;
+                currentFacingTileLocation.y -= 1;
                 break;
             case Direction.LEFT:
                 currentFacingTileLocation.x -= 1;
-                currentFacingTileLocation.y -= 1;
+                //currentFacingTileLocation.y -= 1;
                 break;
             case Direction.RIGHT:
                 currentFacingTileLocation.x += 1;
-                currentFacingTileLocation.y -= 1;
+                //currentFacingTileLocation.y -= 1;
                 break;
         }
 

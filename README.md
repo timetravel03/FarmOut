@@ -59,8 +59,16 @@ Decidí guardar toda la información referente a la plantación en un diccionari
 Cree un gameobject que gestiona el dia y noche cambiando el canal alfa de una textura negra que se sobrepone al juego y estuve investigando el sistema de eventos de unity. Tengo al idea de para que el cambio entre día y noche se produzca un evento que llame, por ejemplo, a la función que hace crecer un cultivo cuando pase un ciclo completo.
 
 ### 2 de Mayo
-Decidí usar eventos normales de C# para gestionar el crecimiento de los cultivos al pasar un cicloy arregle algunos bugs de la gestion del regado.
+Decidí usar eventos normales de C# para gestionar el crecimiento de los cultivos al pasar un ciclo y arreglé algunos bugs de la gestion del regado.
+Ahora las plantas que estén regadas crecen cuando termina el ciclo y "absorben" el agua, asi que para crecer deben ser regadas cada ciclo.
 
 ### 3 de Mayo
 Usé Tile Rules para que las celdas de tierra arada y regada conecten automaticamente, pero aún tienen unos bugs visuales.
 Después de investigar un poco acerca del sistema de Rule Tiles descubrí que el orden en el inspector afecta a cuales se usan en ciertas situaciones (una especie de situación de else-if), asi que reordené los tile rules de más a menos rules, así los rules más específicos se evalúan antes que los mas simples, que también podrían evaluar a "verdadero". También descubrí que el tileset que uso carece del algunos tiles que creo que debería tener, de momento lo dejaré así, pero lo editaré si tengo tiempo.
+
+### 4 de Mayo
+Cambié el spritesheet del jugador, ya que el que usaba no tenía todas las animaciones que necesitaba, asi que tuve que reahacer todas las animaciones, animation events y blend trees. También ajusté algunas funciones com la de hallar tile mas cercana y añadí mas triggers para activar unas u otras animaciones. Actualmente el sistema funciona recibiendo un input, filtra por el modo de herramienta, activa el trigger del animator, la animación lanza la funcion tool based interaction y realiza la función. Es un poco redundante pero me es más claro que la funciones estén ancladas a las animaciones y no que sean algo que ocurre en paralelo, además es mejor para la sincronización y la sensación de juego en mi opinion, pero lo anoto como posible área de mejora si se me ocurre algo mejor.
+
+Estuve experimentando con opciones para crear los objectos interactivos, como casas y demás. Tenía la idea de hacerlos deractmente en el tilemap, pero ahora estoy valorando la opción de que sean gameobjects por la flexibilidad que propocionan.
+
+Tambien estuve experimentando con cursores personalizados, ahora mismo hay uno que cambia de color cuando está sobre una puerta o poza de agua en la que se puede hacer click, y cuando se hace click simplemente muestra un mensaje en el log.
