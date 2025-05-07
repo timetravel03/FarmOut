@@ -72,3 +72,13 @@ Cambié el spritesheet del jugador, ya que el que usaba no tenía todas las anim
 Estuve experimentando con opciones para crear los objectos interactivos, como casas y demás. Tenía la idea de hacerlos deractmente en el tilemap, pero ahora estoy valorando la opción de que sean gameobjects por la flexibilidad que propocionan.
 
 Tambien estuve experimentando con cursores personalizados, ahora mismo hay uno que cambia de color cuando está sobre una puerta o poza de agua en la que se puede hacer click, y cuando se hace click simplemente muestra un mensaje en el log.
+
+### 7 de Mayo
+Hoy empecé a trabajar en el sistema de inventario del juego, con la ayuda de un tutorial para así aprender como funciona el sistema de UI de Unity en mas detalle.<br> [Unity INVENTORY: A Definitive Tutorial](https://www.youtube.com/watch?v=oJAE6CbsQQA)<br>
+Tuve un problema al seguir el tutorial, en la parte de arrastrar y soltar, la imagen de mi objeto desaparecía, pero mecánicamente funcionaba, es decir, se movía al hueco correcto.<br>
+El problema se debía a que para ajustar mi UI al tamaño de mi juego, puse el render mode del canvas a screen space camera, el problema debe ser que Input.MousePostion toma las dimensiones sin escalar del canvas, por lo que aunque estaba haciendo click en una seccion del canvas que estaba en pantalla, la posicion real era mucho mas lejana, el objecto no desaparecía, si no que se iba muy lejos (por defecto el canvas es enorme). Encontre la solución en los comentarios de un [video complementario](https://www.youtube.com/watch?v=kWRyZ3hb1Vc) que sugería el tutorial, esta es la línea que lo arregló:
+```c#
+        transform.position = Vector2.Lerp(transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), 1);
+        // en lugar de
+        transform.position = Input.mousePosition;
+```
