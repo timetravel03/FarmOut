@@ -82,3 +82,22 @@ El problema se debía a que para ajustar mi UI al tamaño de mi juego, puse el r
         // en lugar de
         transform.position = Input.mousePosition;
 ```
+
+### 8 de Mayo
+Seguí con el tutorial del inventario, al depender tanto de funciones específicas de Unity (Scriptable Objects, Interfaces, etc.) se me hace algo pesado de seguir, pero en el momento en el que tenga que empezar a adaptarlo a las necesidades del juego seguramente lo vea más claro, ahora mismo lo miro en un vacío.
+Actualmente el inventario permite arrastrar y soltar, acumular objetos y seleccionar objetos.
+
+### 9 de Mayo
+Hoy acabé el tutorial y su complementario, de momento el inventario no interactúa direactamente con el juego. Tengo pendiente la integración.
+
+### 10 de Mayo
+Enlacé las funcionalidades del juego con el inventario en función del objeto seleccionado en la barra de herramientas.
+
+### 11 de Mayo
+Aprendí sobre el y-sorting y los pivots de los sprites, que sirven para ordenar el orden de renderizado de los sprites en funcion de su valor Y de posicion. Ahora la casa, la puerta y el personaje se muestran correctamente aun estando en la misma capa.
+
+Cambié la forma en la que se instaciaban los enemigos en el spawner, ahora se instancian directamente a traves del prefab.
+
+Empecé a probar a cambiar entre escenas, aún tengo que pensar como voy a mantener el estado del inventario entre escenas, o si no, hacer que todo el juego se desarrolle en una escena.
+
+Ahora una vez los cultivos crecen, se pueden recoger con la azada y se añaden al inventario, por el momento solo hay calabazas.

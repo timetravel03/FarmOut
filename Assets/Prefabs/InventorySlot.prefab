@@ -113,3 +113,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b41b3d8519bdfa49be3b1068c92956c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 3393318859432060646}
+  selectedColor: {r: 1, g: 0.4088126, b: 0.2941177, a: 1}
+  defaultColor: {r: 0.76792455, g: 1, b: 0.9892557, a: 1}

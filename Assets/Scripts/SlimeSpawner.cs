@@ -17,13 +17,13 @@ public class SlimeSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     void CreateSlime()
     {
         animator.SetTrigger("open_chest");
-        Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+        Instantiate(enemyPrefab, this.transform.position, Quaternion.identity);
         Debug.Log("Trigger");
     }
 }

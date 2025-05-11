@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5391892970966641241
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4506087278010073083}
+  - component: {fileID: 1793874187841014006}
+  m_Layer: 0
+  m_Name: CropManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4506087278010073083
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391892970966641241}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.39233157, y: -0.5792746, z: -0.0059793796}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1793874187841014006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5391892970966641241}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb68ef7fb84c804699aedddec1fdd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soilTilemap: {fileID: 0}
+  farmlandTilemap: {fileID: 0}
+  wateredTilemap: {fileID: 0}
+  cropTilemap: {fileID: 0}
+  cropSprite: {fileID: -9198211017647661331, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  farmlandRT: {fileID: 11400000, guid: 77d68095f7823c9438a6959df5520e39, type: 2}
+  wateredFarmlandRT: {fileID: 11400000, guid: 8b6bfd22fe0569540a1b7b7a348e30e6, type: 2}
+  wateredFarmlandSprite: {fileID: -359692205, guid: 0d0a65fd9fdcbcd48a54972bc214518d, type: 3}
+  pumpkinSprites:
+  - {fileID: -7493073933449792820, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -5967672503603263023, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: 4753408381409157624, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -8963360674610236421, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  carrotSprites:
+  - {fileID: -7380761422910866166, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: 435282911145922356, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: 190436279196790070, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: 2876862503548076407, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  potatoSprites:
+  - {fileID: -9198211017647661331, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: 7660611740966990604, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -261831760282506664, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -3600546957704983248, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  tomatoSprites:
+  - {fileID: 6410458881516362893, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -4691750757537860289, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: 5686831747179217686, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -4976335543103668878, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  beanSprites:
+  - {fileID: 2039468119, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: 1098567186, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -5103701998847512290, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -1986439381, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -6894781581935135194, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -1564360506, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}
+  - {fileID: -4422117925148992179, guid: 33c5bd1dccc7eba40a50b9da44a1db00, type: 3}

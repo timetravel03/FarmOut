@@ -3,6 +3,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
@@ -29,14 +30,14 @@ public class PlayerController : MonoBehaviour
     public GameObject cropHelper;           // un cuadrado que muestra el tile que se esta seleccionando
     public Vector2 position;                // posicion del personaje
     public Tilemap farmlandTilemap;         // Tilemap
-    public Tilemap cropTilemap;
     public ToolMode toolMode;               // Modo de herramienta del personaje
-
 
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
     private string lastAttackDirection = "";
     private int toolIndex;
     private ToolMode[] tools = new ToolMode[] { ToolMode.SWORD, ToolMode.HOE, ToolMode.WATERING };
+
+    public Item addItemTest;
 
     private void OnGUI()
     {
@@ -83,6 +84,11 @@ public class PlayerController : MonoBehaviour
 
             toolMode = tools[toolIndex];
         }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            InventoryManager.instance.AddItem(addItemTest);
+        }
     }
 
     // se llama cuando el personaje se mueve (funcion de PlayerInput)
@@ -99,7 +105,8 @@ public class PlayerController : MonoBehaviour
         Animate();
 
         // prueba de concepto
-        if (toolMode == ToolMode.HOE || toolMode == ToolMode.WATERING)
+
+        if (InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Plant || InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Harvest)
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = true;
             cropHelper.transform.position = farmlandTilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f, 0.08f);
@@ -206,22 +213,32 @@ public class PlayerController : MonoBehaviour
     // activa el trigger de la anim
     void OnFire()
     {
-        switch (toolMode)
+        if (SceneManager.GetActiveScene().name != "Home")
         {
-            case ToolMode.SWORD:
-                animator.SetTrigger("swordAttack");
-                break;
-            case ToolMode.HOE:
-                animator.SetTrigger("hoeAction");
-                break;
-            case ToolMode.WATERING:
-                animator.SetTrigger("waterAction");
-                break;
-            case ToolMode.PICKAXE:
-                animator.SetTrigger("pickAction");
-                break;
-            default:
-                break;
+            switch (InventoryManager.instance.GetSelectedItem(false)?.actionType)
+            {
+                case Item.ActionType.Attack:
+                    animator.SetTrigger("swordAttack");
+                    break;
+                case Item.ActionType.Harvest:
+                    if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.Hoe)
+                    {
+                        animator.SetTrigger("hoeAction");
+                    }
+                    else if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.WaterCan)
+                    {
+                        animator.SetTrigger("waterAction");
+                    }
+                    break;
+                case Item.ActionType.Break:
+                    animator.SetTrigger("pickAction");
+                    break;
+                case Item.ActionType.Plant:
+                    animator.SetTrigger("hoeAction");
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -230,9 +247,25 @@ public class PlayerController : MonoBehaviour
     {
         LockMovement();
         Vector3Int tempPosition = LocateCurrentFacingTile();
-        switch (toolMode)
+        Item selectedItem = InventoryManager.instance.GetSelectedItem(false);
+
+        switch (selectedItem?.type)
         {
-            case ToolMode.SWORD:
+            case Item.ItemType.Hoe:
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    if (!cropManager.RemoveCrop(tempPosition))
+                    {
+                        cropManager.RemoveFarmland(tempPosition);
+                    }
+                }
+                else
+                {
+                    cropManager.HarvestCrop(tempPosition);
+                    cropManager.CreateFarmland(tempPosition);
+                }
+                break;
+            case Item.ItemType.Sword:
                 switch (facingDirection)
                 {
                     case Direction.UP:
@@ -253,28 +286,30 @@ public class PlayerController : MonoBehaviour
                         break;
                 }
                 break;
-            case ToolMode.HOE:
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    if (!cropManager.RemoveCrop(tempPosition))
-                    {
-                        cropManager.RemoveFarmland(tempPosition);
-                    }
-                }
-                else
-                {
-                    if (!cropManager.CreateFarmland(tempPosition))
-                    {
-                        cropManager.PlantCrop(tempPosition, CropTileData.CropType.TOMATO);
-                    }
-                }
+            case Item.ItemType.Pickaxe:
                 break;
-            case ToolMode.WATERING:
+            case Item.ItemType.WaterCan:
                 cropManager.WaterTile(tempPosition);
-                //cropManager.DebugMakeCropGrow(tempPosition);
+                //cropManager.GrowPlantedCrops();
                 break;
-            case ToolMode.PICKAXE:
-
+            case Item.ItemType.PumpkinSeed:
+                if (cropManager.PlantCrop(tempPosition, CropTileData.CropType.PUMPKIN))
+                {
+                    // reduce el numero de objetos
+                    InventoryManager.instance.GetSelectedItem(true);
+                }
+                break;
+            case Item.ItemType.Pumpkin:
+                break;
+            case Item.ItemType.TomatoSeed:
+                break;
+            case Item.ItemType.Tomato:
+                break;
+            case Item.ItemType.CarrotSeed:
+                break;
+            case Item.ItemType.Carrot:
+                break;
+            case Item.ItemType.Potato:
                 break;
             default:
                 break;

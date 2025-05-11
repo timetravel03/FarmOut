@@ -57,6 +57,11 @@ public class CropManager : MonoBehaviour
         return wateredTilemap.GetTile(pos) != null;
     }
 
+    public bool IsCropPlanted(Vector3Int pos)
+    {
+        return cropData.ContainsKey(pos) && cropData[pos] != null;
+    }
+
     // crea terreno arado si es posible e informa si tuvo éxito
     public bool CreateFarmland(Vector3Int pos)
     {
@@ -106,11 +111,19 @@ public class CropManager : MonoBehaviour
         }
     }
 
+    public void HarvestCrop(Vector3Int pos)
+    {
+        if (IsCropPlanted(pos) && cropData[pos].GrowthStage <= cropData[pos].GrowthSprites.Length - 1)
+        {
+            InventoryManager.instance.AddItem(InventoryManager.instance.itemList[1]);
+            RemoveCrop(pos);
+        }
+    }
     public void DebugMakeCropGrow(Vector3Int pos)
     {
         if (cropData.ContainsKey(pos) && cropData[pos] != null)
         {
-            cropData[pos].GrowCrop(cropTilemap,wateredTilemap);
+            cropData[pos].GrowCrop(cropTilemap, wateredTilemap);
         }
     }
 
@@ -118,10 +131,10 @@ public class CropManager : MonoBehaviour
     {
         foreach (CropTileData crop in cropData.Values)
         {
-            Debug.Log("Cycle Complete");
             if (crop != null)
             {
-                crop.GrowCrop(cropTilemap,wateredTilemap);
+                Debug.Log("Cycle Complete");
+                crop.GrowCrop(cropTilemap, wateredTilemap);
             }
         }
     }
