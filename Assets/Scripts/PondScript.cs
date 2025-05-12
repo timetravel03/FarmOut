@@ -24,7 +24,7 @@ public class PondScript : MonoBehaviour
         UnityEngine.Cursor.SetCursor(bCursor, hotspot, cursorMode);
         if (Input.GetMouseButtonDown(1))
         {
-            Debug.Log("Click en puerta");
+            Debug.Log("Click en la charca");
         }
     }
 

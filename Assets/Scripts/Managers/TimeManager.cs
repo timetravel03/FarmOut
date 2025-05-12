@@ -11,25 +11,24 @@ public class TimeManager : MonoBehaviour
     public bool DayTime { get { return daytime; } }
     public int DayCounter { get { return daycounter; } }
 
-
     private float deltaTimer;
     private bool reverse;
     private bool daytime;
     private int daycounter;
 
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         deltaTimer = 0;
         reverse = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.position = playerTransform.position;
     }
+
     private void FixedUpdate()
     {
         DayTimer();
@@ -37,7 +36,7 @@ public class TimeManager : MonoBehaviour
 
     private void DayTimer()
     {
-        if (deltaTimer >= 24f)
+        if (deltaTimer >= 124f)
         {
             reverse = true;
         }
@@ -59,7 +58,7 @@ public class TimeManager : MonoBehaviour
 
         daytime = deltaTimer <= 12f;
 
-        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / 30f);
+        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / 140f);
     }
 
     private void OnGUI()

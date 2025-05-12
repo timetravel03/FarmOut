@@ -101,3 +101,6 @@ Cambié la forma en la que se instaciaban los enemigos en el spawner, ahora se i
 Empecé a probar a cambiar entre escenas, aún tengo que pensar como voy a mantener el estado del inventario entre escenas, o si no, hacer que todo el juego se desarrolle en una escena.
 
 Ahora una vez los cultivos crecen, se pueden recoger con la azada y se añaden al inventario, por el momento solo hay calabazas.
+
+### 12 de Mayo
+Probé a hacer una pantalla de título simple para ir probando, también empecé el diseño del minijuego de pesca que se podrá jugar.

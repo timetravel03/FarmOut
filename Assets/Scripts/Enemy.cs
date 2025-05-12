@@ -38,8 +38,6 @@ public class Enemy : MonoBehaviour
     {
         Health -= damage;
         Vector2 directionToPlayer = (Vector2)player.position - slimeBody.position;
-        //slimeBody.MovePosition(slimeBody.position - directionToPlayer * 0.5f);
-        //print(Health.ToString());
     }
 
     public void Defeated()
@@ -52,7 +50,6 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -61,15 +58,6 @@ public class Enemy : MonoBehaviour
         randomDirection = new Vector2((float)Random.Range(-1, 2), (float)Random.Range(-1, 2));
     }
 
-    // Update is called once per frame
-    //void Update()
-    //{
-    //    deltaCounter += Time.deltaTime;
-    //    //print(deltaCounter.ToString());
-
-    //    FollowFunction();
-    //    WanderFunction();
-    //}
     void FixedUpdate()
     {
         deltaCounter += Time.fixedDeltaTime; // Usar fixedDeltaTime en lugar de deltaTime
@@ -89,11 +77,16 @@ public class Enemy : MonoBehaviour
             // Normalizar la dirección para mantener una velocidad constanteddsds
             directionToPlayer.Normalize();
 
-            //if (TryMove(directionToPlayer))
+            // Usar TryMove para verificar colisiones
+            if (TryMove(directionToPlayer))
             {
-                // Mover el enemigo en dirección al jugador con una velocidad constante
+                // Solo moverse si no hay colisiones
                 slimeBody.MovePosition(slimeBody.position + directionToPlayer * (moveSpeed * 0.1f) * Time.fixedDeltaTime);
                 animator.SetBool("moving", true);
+            }
+            else
+            {
+                animator.SetBool("moving", false);
             }
         }
         else
@@ -118,8 +111,16 @@ public class Enemy : MonoBehaviour
             }
             else
             {
-                slimeBody.MovePosition(slimeBody.position + randomDirection * (moveSpeed * 0.1f) * Time.fixedDeltaTime);
-                animator.SetBool("moving", true);
+                if (TryMove(randomDirection))
+                {
+                    slimeBody.MovePosition(slimeBody.position + randomDirection * (moveSpeed * 0.1f) * Time.fixedDeltaTime);
+                    animator.SetBool("moving", true);
+                }
+                else
+                {
+                    animator.SetBool("moving", false);
+                    randomDirection = new Vector2(Random.Range(-1f, 2f), Random.Range(-1f, 2f));
+                }
             }
         }
 

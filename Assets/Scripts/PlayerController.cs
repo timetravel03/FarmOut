@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
     private ToolMode[] tools = new ToolMode[] { ToolMode.SWORD, ToolMode.HOE, ToolMode.WATERING };
 
     public Item addItemTest;
+    public bool LockFireEvent { get; set; }
 
     private void OnGUI()
     {
@@ -213,31 +214,34 @@ public class PlayerController : MonoBehaviour
     // activa el trigger de la anim
     void OnFire()
     {
-        if (SceneManager.GetActiveScene().name != "Home")
+        if (!LockFireEvent)
         {
-            switch (InventoryManager.instance.GetSelectedItem(false)?.actionType)
+            if (SceneManager.GetActiveScene().name != "Home")
             {
-                case Item.ActionType.Attack:
-                    animator.SetTrigger("swordAttack");
-                    break;
-                case Item.ActionType.Harvest:
-                    if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.Hoe)
-                    {
+                switch (InventoryManager.instance.GetSelectedItem(false)?.actionType)
+                {
+                    case Item.ActionType.Attack:
+                        animator.SetTrigger("swordAttack");
+                        break;
+                    case Item.ActionType.Harvest:
+                        if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.Hoe)
+                        {
+                            animator.SetTrigger("hoeAction");
+                        }
+                        else if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.WaterCan)
+                        {
+                            animator.SetTrigger("waterAction");
+                        }
+                        break;
+                    case Item.ActionType.Break:
+                        animator.SetTrigger("pickAction");
+                        break;
+                    case Item.ActionType.Plant:
                         animator.SetTrigger("hoeAction");
-                    }
-                    else if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.WaterCan)
-                    {
-                        animator.SetTrigger("waterAction");
-                    }
-                    break;
-                case Item.ActionType.Break:
-                    animator.SetTrigger("pickAction");
-                    break;
-                case Item.ActionType.Plant:
-                    animator.SetTrigger("hoeAction");
-                    break;
-                default:
-                    break;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
