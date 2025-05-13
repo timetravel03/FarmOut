@@ -18,7 +18,6 @@ public class InventoryManager : MonoBehaviour
             bool isNumber = int.TryParse(Input.inputString, out int number);
             if (isNumber && number > 0 && number < 7)
             {
-                Debug.Log("Es numero");
                 ChangeSelectedSlot(number - 1);
             }
         }

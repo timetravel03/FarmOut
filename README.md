@@ -104,3 +104,12 @@ Ahora una vez los cultivos crecen, se pueden recoger con la azada y se añaden a
 
 ### 12 de Mayo
 Probé a hacer una pantalla de título simple para ir probando, también empecé el diseño del minijuego de pesca que se podrá jugar.
+
+### 13 de Mayo
+Empecé a trabajar en la persistencia de datos de los cultivos, mi idea es usar el paquete "System.Text.Json" y el método JsonSerializer.Serialize() para serializar el diccionario de los cultivos a un archivo json, luego probe otros serializadores de json pero al estar trabajando con tipos de datos complejos, especialmente las claves del diccionario, decidí hacer mi propio sistema de guardado con un archivo de texto.
+
+Añadí los métodos SaveCrops y LoadCrops guardan y cargan los datos del diccionario usando streamreader/writer y los helper methods GetCorrectSprite para obtener los sprites del cultivo y UpdateCropTilemaps para actualizar los tilemaps.
+
+Añadí un setter a growthstage de croptiledata para que seleccione el sprite correspondiente.
+
+Cambié la funcionalidad de la puerta para que cuando se haga click, se guarden los cultivos y pase un día, planeo hacer que transicione con un fundido a negro.

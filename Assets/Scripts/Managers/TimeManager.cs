@@ -11,7 +11,7 @@ public class TimeManager : MonoBehaviour
     public bool DayTime { get { return daytime; } }
     public int DayCounter { get { return daycounter; } }
 
-    private float deltaTimer;
+    private static float deltaTimer;
     private bool reverse;
     private bool daytime;
     private int daycounter;
@@ -20,7 +20,7 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-        deltaTimer = 0;
+        deltaTimer = 1;
         reverse = false;
     }
 
@@ -36,7 +36,7 @@ public class TimeManager : MonoBehaviour
 
     private void DayTimer()
     {
-        if (deltaTimer >= 124f)
+        if (deltaTimer >= 12f)
         {
             reverse = true;
         }
@@ -58,7 +58,7 @@ public class TimeManager : MonoBehaviour
 
         daytime = deltaTimer <= 12f;
 
-        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / 140f);
+        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / 15f);
     }
 
     private void OnGUI()
@@ -71,5 +71,10 @@ public class TimeManager : MonoBehaviour
 
         GUI.Label(new Rect(x, y + 90, 200, 50), $"Day Timer: {deltaTimer.ToString()}");
         GUI.Label(new Rect(x, y + 105, 200, 50), $"DayTime: {DayTime.ToString()}");
+    }
+
+    public static void RestartDay()
+    {
+        deltaTimer = 0f;
     }
 }

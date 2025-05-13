@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,6 +7,7 @@ using UnityEngine.WSA;
 
 public class DoorScript : MonoBehaviour
 {
+    public static event Action SaveEvent;
     public Texture2D bCursor;
     public Texture2D yCursor;
     Vector2 hotspot = new Vector2(0, 0);
@@ -32,14 +34,8 @@ public class DoorScript : MonoBehaviour
         UnityEngine.Cursor.SetCursor(bCursor, hotspot, cursorMode);
         if (Input.GetMouseButtonDown(1))
         {
-            if (SceneManager.GetActiveScene().name == "Home")
-            {
-                SceneManager.LoadScene("SampleScene");
-            }
-            else
-            {
-                SceneManager.LoadScene("Home");
-            }
+            SaveEvent?.Invoke();
+            TimeManager.RestartDay();
             Debug.Log("Click en puerta");
         }
     }
@@ -47,6 +43,5 @@ public class DoorScript : MonoBehaviour
     private void OnMouseExit()
     {
         UnityEngine.Cursor.SetCursor(yCursor, hotspot, cursorMode);
-
     }
 }

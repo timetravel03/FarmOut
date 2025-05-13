@@ -10,11 +10,24 @@ namespace Assets
 {
     public class CropTileData
     {
+        private int growthStage;
         public enum CropType { PUMPKIN, CARROT, TOMATO, BEAN, POTATO}
 
         public Vector3Int Position;
         public CropType Type;
-        public int GrowthStage;
+        public int GrowthStage
+        {
+            get
+            {
+                return growthStage;
+            }
+
+            set
+            {
+                growthStage = value;
+                CurrentSprite = GrowthSprites[value];
+            }
+        }
         public bool Watered;
         public Sprite[] GrowthSprites;
         public Sprite CurrentSprite;
