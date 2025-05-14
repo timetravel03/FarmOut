@@ -113,3 +113,11 @@ Añadí los métodos SaveCrops y LoadCrops guardan y cargan los datos del diccio
 Añadí un setter a growthstage de croptiledata para que seleccione el sprite correspondiente.
 
 Cambié la funcionalidad de la puerta para que cuando se haga click, se guarden los cultivos y pase un día, planeo hacer que transicione con un fundido a negro.
+
+### 14 de Mayo
+Trabajé un poco en la pantalla de título, ahora si vas a cargar una partida y no exite un arhcivo de guardado (de cultivos por ahora), te muestra un mensaje de que no existe ningun archivo de guardado y no te deja continuar.
+Si pulsas Start y hay un archivo de guardado te avisa de que empezar una nueva partida borrará tu progreso (no es del todo cierto porque no se guarda hasta que el jugador entra en casa, pero más o menos vale)
+
+Cree una nueva clase de VariablesGlobales (y funciones) para el funcionamiento de la pantalla de título, te indica si hay una partida iniciada actualmente.
+
+Estuve pensando en como guardar el estado del inventario, lo mas probable es que haga algo parecido al de los cultivos, pero al ser los objetos scriptable objects, en principio no necesito serializarlos, me gustaría que el inventario mantuviese el orden, pero probablemente acabe cargando los objetos de golpe e ignore el orden si no tengo tiempo.

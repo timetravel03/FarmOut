@@ -101,4 +101,17 @@ public class InventoryManager : MonoBehaviour
         }
         return null;
     }
+
+    public void SaveInventory()
+    {
+        try
+        {
+
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+    }
 }

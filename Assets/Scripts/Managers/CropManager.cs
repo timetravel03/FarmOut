@@ -34,12 +34,15 @@ public class CropManager : MonoBehaviour
         farmlandTile = ScriptableObject.CreateInstance<Tile>();
         TimeManager.OnCycleComplete += GrowPlantedCrops;
         DoorScript.SaveEvent += SaveCrops;
-        LoadCrops();
+        if (GlobalVariables.ResumeGame)
+        {
+            LoadCrops();
+        }
     }
 
     private void Awake()
     {
-        
+
     }
 
     //determina si hay un sprite de tierra arada en el tilemap
@@ -307,7 +310,7 @@ public class CropManager : MonoBehaviour
             {
 
                 farmlandTilemap.SetTile(data.Key, farmlandRT);
-                
+
                 if (data.Value != null)
                 {
                     if (data.Value.Watered)
