@@ -9,6 +9,7 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [Header("UI")]
     public Image image;
     public Text countText;
+    public Text dText;
 
     public Item item;
     public int count;
@@ -23,8 +24,10 @@ public class InventoryItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void RefreshCount()
     {
         countText.text = count.ToString();
+        dText.text = countText.text;
         bool textActive = count > 1;
         countText.gameObject.SetActive(textActive);
+        dText.gameObject.SetActive(textActive);
     }
 
     // crea el objeto

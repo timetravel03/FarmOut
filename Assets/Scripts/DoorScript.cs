@@ -7,7 +7,7 @@ using UnityEngine.WSA;
 
 public class DoorScript : MonoBehaviour
 {
-    public static event Action SaveEvent;
+    public static event Action DoorEvent;
     public Texture2D bCursor;
     public Texture2D yCursor;
     Vector2 hotspot = new Vector2(0, 0);
@@ -34,8 +34,8 @@ public class DoorScript : MonoBehaviour
         UnityEngine.Cursor.SetCursor(bCursor, hotspot, cursorMode);
         if (Input.GetMouseButtonDown(1))
         {
-            SaveEvent?.Invoke();
-            TimeManager.RestartDay();
+            DoorEvent?.Invoke();
+            GlobalVariables.GoToSleep = true;
             Debug.Log("Click en puerta");
         }
     }

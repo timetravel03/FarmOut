@@ -9,6 +9,8 @@ using UnityEngine;
 public class GlobalVariables
 {
     public static bool ResumeGame = false;
+    public static bool GoToSleep = false;
+    public static bool LockPlayerMovement = false;
 
     public static bool SaveFileExists()
     {

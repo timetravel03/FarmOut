@@ -11,17 +11,19 @@ public class TimeManager : MonoBehaviour
     public bool DayTime { get { return daytime; } }
     public int DayCounter { get { return daycounter; } }
 
-    private static float deltaTimer;
-    private bool reverse;
+    private static float deltaTimer = 1f;
+    private bool reverse = false;
     private bool daytime;
     private int daycounter;
 
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
 
-    void Start()
+    private float dayLenght = 24f;
+    private bool goToSleep;
+
+    private void Start()
     {
-        deltaTimer = 1;
-        reverse = false;
+        DoorScript.DoorEvent += ToggleSleep;
     }
 
     void Update()
@@ -31,12 +33,19 @@ public class TimeManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        DayTimer();
+        if (goToSleep)
+        {
+            FadeToBlack();
+        }
+        else
+        {
+            DayTimer();
+        }
     }
 
     private void DayTimer()
     {
-        if (deltaTimer >= 12f)
+        if (deltaTimer >= dayLenght - 2f)
         {
             reverse = true;
         }
@@ -58,7 +67,7 @@ public class TimeManager : MonoBehaviour
 
         daytime = deltaTimer <= 12f;
 
-        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / 15f);
+        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / dayLenght);
     }
 
     private void OnGUI()
@@ -76,5 +85,27 @@ public class TimeManager : MonoBehaviour
     public static void RestartDay()
     {
         deltaTimer = 0f;
+        GlobalVariables.LockPlayerMovement = false;
+    }
+
+    private void FadeToBlack()
+    {
+        GlobalVariables.LockPlayerMovement = true;
+        spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / dayLenght);
+
+        if (deltaTimer >= dayLenght)
+        {
+            goToSleep = false;
+            RestartDay();
+        }
+        else if (deltaTimer < dayLenght)
+        {
+            deltaTimer += Time.deltaTime * (dayLenght/2f);
+        }
+    }
+
+    private void ToggleSleep()
+    {
+        goToSleep = true;
     }
 }

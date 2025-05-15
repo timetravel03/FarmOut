@@ -30,7 +30,18 @@ public class InventoryManager : MonoBehaviour
         ChangeSelectedSlot(0);
         foreach (Item item in startItems)
         {
-            AddItem(item);
+            // trampilla
+            if (item.stackable)
+            {
+                for (int i = 0; i < 16; i++)
+                {
+                    AddItem(item);
+                }
+            }
+            else
+            {
+                AddItem(item);
+            }
         }
     }
 

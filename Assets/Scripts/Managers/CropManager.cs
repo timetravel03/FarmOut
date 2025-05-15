@@ -12,6 +12,8 @@ public class CropManager : MonoBehaviour
     public Tilemap farmlandTilemap; // tilemap donde se crea la tierra arada
     public Tilemap wateredTilemap;
     public Tilemap cropTilemap;     // tilemap donde se plantan los cultivos
+    public Tilemap decorationTilemap;
+
     public Sprite cropSprite;
     public RuleTile farmlandRT;
     public RuleTile wateredFarmlandRT;
@@ -33,7 +35,7 @@ public class CropManager : MonoBehaviour
         cropTile.sprite = cropSprite;
         farmlandTile = ScriptableObject.CreateInstance<Tile>();
         TimeManager.OnCycleComplete += GrowPlantedCrops;
-        DoorScript.SaveEvent += SaveCrops;
+        TimeManager.OnCycleComplete += SaveCrops;
         if (GlobalVariables.ResumeGame)
         {
             LoadCrops();
@@ -68,11 +70,20 @@ public class CropManager : MonoBehaviour
         return cropData.ContainsKey(pos) && cropData[pos] != null;
     }
 
+    private void RemoveDecoration(Vector3Int pos)
+    {
+        if (decorationTilemap.GetTile(pos) != null)
+        {
+            decorationTilemap.SetTile(pos, null);
+        }
+    }
+
     // crea terreno arado si es posible e informa si tuvo éxito
     public bool CreateFarmland(Vector3Int pos)
     {
         if (!IsSoil(pos))
         {
+            RemoveDecoration(pos);
             farmlandTilemap.SetTile(pos, farmlandRT);
             cropData.Add(pos, null);
             return true;
@@ -88,7 +99,7 @@ public class CropManager : MonoBehaviour
     {
         if (IsSoilAvailable(pos))
         {
-            CropTileData crop = new CropTileData(pos, cropType, pumpkinSprites);
+            CropTileData crop = new CropTileData(pos, cropType, GetCorrectSprites(cropType));
             crop.Watered = IsSoilWatered(pos);
             cropData[pos] = crop;
             cropTilemap.SetTile(pos, cropData[pos].GetTile());
@@ -121,7 +132,15 @@ public class CropManager : MonoBehaviour
     {
         if (IsCropPlanted(pos) && cropData[pos].GrowthStage == cropData[pos].GrowthSprites.Length - 1)
         {
-            InventoryManager.instance.AddItem(InventoryManager.instance.itemList[1]);
+            //TODO añadir una condicion para que dependiendo del cultivo recogido, de el item correspondiente
+            if (cropData[pos].Type == CropTileData.CropType.PUMPKIN)
+            {
+                InventoryManager.instance.AddItem(InventoryManager.instance.itemList[1]);
+            }
+            else
+            {
+                InventoryManager.instance.AddItem(InventoryManager.instance.itemList[5]);
+            }
             RemoveCrop(pos);
         }
     }

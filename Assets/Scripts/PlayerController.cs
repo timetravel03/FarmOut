@@ -102,7 +102,10 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         position = rigidBody.position;
-        Movement();
+        if (!GlobalVariables.LockPlayerMovement)
+        {
+            Movement();
+        }
         Animate();
 
         // prueba de concepto
@@ -253,6 +256,7 @@ public class PlayerController : MonoBehaviour
         Vector3Int tempPosition = LocateCurrentFacingTile();
         Item selectedItem = InventoryManager.instance.GetSelectedItem(false);
 
+        // TODO hacer algo con esto
         switch (selectedItem?.type)
         {
             case Item.ItemType.Hoe:
@@ -310,6 +314,11 @@ public class PlayerController : MonoBehaviour
             case Item.ItemType.Tomato:
                 break;
             case Item.ItemType.CarrotSeed:
+                if (cropManager.PlantCrop(tempPosition, CropTileData.CropType.CARROT))
+                {
+                    // reduce el numero de objetos
+                    InventoryManager.instance.GetSelectedItem(true);
+                }
                 break;
             case Item.ItemType.Carrot:
                 break;
