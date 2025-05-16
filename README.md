@@ -128,3 +128,12 @@ Redecoré el escenario del juego.
 Añadí un nuevo objeto zanahoria.
 Arreglé un bug que impedía que se pudiese regar cuando se caminaba hacia arriba (condicion incorrecta en el animator)
 Retoqué el sistema de guardado para que guardase una vez pase el día y no antes.
+
+### 16 de Mayo
+Añadí una variable global que indica si el cursor esta sobre un objeto que se puede pulsar (para que no se use un objecto si la intención es hacer click)
+Añadí una comprobación de distancia de la puerta al jugador para que si está demasiado lejos no haga nada.
+Refactoricé las interacciones de objetos en el PlayerController para aprovechar más los tipos definidos en el scriptable object de item.
+Añadí una función que convierte el tipo de item (si es un cultivo) al tipo de mi CropTileData, podría haber usado el de Croptiledata, pero esto me pareció más sencillo al estar todo montado, tambien hay otra que convierte del tipo objeto a cultivo.
+Organicé un los scripts en carpetas.
+Me di cuenta de que estaba usando los sprites equivocados para representar las semillas en el inventario, los que estaba usando debían ser parte de los sprites de crecimiento (concretamente la primera fase) así que cambie los del inventario y los otros los añadi a los sprites de crecimiento.
+Descubrí un bug que impide que los objetos que se pueden acumular se muevan a otras celdas (no se produce el evento OnDrop del espacio del inventario), queda pendiente.

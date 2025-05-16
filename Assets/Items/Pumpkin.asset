@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Pumpkin
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
-  type: 0
-  actionType: 0
+  type: 5
+  actionType: 1
   range: {x: 5, y: 4}
   stackable: 1
   image: {fileID: -9058764611767818815, guid: ea3ad55c91588274699dccd475d66676, type: 3}

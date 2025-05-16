@@ -36,7 +36,7 @@ public class FishingMinigame : MonoBehaviour
     void StartMinigame()
     {
         playerController.LockMovement();
-        playerController.LockFireEvent = true;
+        PlayerController.LockFireEvent = true;
         fishingUI.gameObject.SetActive(true);
         started = true;
     }

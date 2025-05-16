@@ -27,21 +27,40 @@ public class DoorScript : MonoBehaviour
     private void OnMouseDown()
     {
         // como solo responde a click izquierdo hay que hacer una detección manual
+
     }
 
     private void OnMouseOver()
     {
-        UnityEngine.Cursor.SetCursor(bCursor, hotspot, cursorMode);
-        if (Input.GetMouseButtonDown(1))
+        if (CloseEnough())
         {
-            DoorEvent?.Invoke();
-            GlobalVariables.GoToSleep = true;
-            Debug.Log("Click en puerta");
+            GlobalVariables.CursorOverClickableObject = true;
+            UnityEngine.Cursor.SetCursor(bCursor, hotspot, cursorMode);
+            if (Input.GetMouseButtonDown(1))
+            {
+                DoorEvent?.Invoke();
+                GlobalVariables.GoToSleep = true;
+                Debug.Log("Click en puerta");
+            }
         }
     }
 
     private void OnMouseExit()
     {
+        GlobalVariables.CursorOverClickableObject = false;
         UnityEngine.Cursor.SetCursor(yCursor, hotspot, cursorMode);
+    }
+
+    private bool CloseEnough()
+    {
+        Vector3 distance = PlayerController.instance.transform.position - transform.position;
+        if (distance.magnitude < .5f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

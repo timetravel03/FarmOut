@@ -11,7 +11,7 @@ namespace Assets
     public class CropTileData
     {
         private int growthStage;
-        public enum CropType { PUMPKIN, CARROT, TOMATO, BEAN, POTATO}
+        public enum CropType { PUMPKIN, CARROT, TOMATO, BEAN, POTATO, EMPTY}
 
         public Vector3Int Position;
         public CropType Type;

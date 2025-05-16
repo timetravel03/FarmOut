@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 82314efdd9b993944991f17ee4bc1e27, type: 3}
-  m_Name: WateringCan
+  m_Name: TomatoSeed
   m_EditorClassIdentifier: 
   tile: {fileID: 0}
-  type: 3
-  actionType: 4
+  type: 6
+  actionType: 0
   range: {x: 5, y: 4}
-  stackable: 0
-  image: {fileID: -4696760917660491729, guid: 2695e07cadcfdd3428e7e1c41e2ee871, type: 3}
+  stackable: 1
+  image: {fileID: -3321852513641714208, guid: ea3ad55c91588274699dccd475d66676, type: 3}

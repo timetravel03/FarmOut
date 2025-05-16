@@ -26,25 +26,18 @@ public class CropManager : MonoBehaviour
     public Sprite[] beanSprites;
 
     private Tile cropTile;
-    private Tile farmlandTile;
     private Dictionary<Vector3Int, CropTileData> cropData = new Dictionary<Vector3Int, CropTileData>();     // valores nulos representan terreno arado
 
     void Start()
     {
         cropTile = ScriptableObject.CreateInstance<Tile>();
         cropTile.sprite = cropSprite;
-        farmlandTile = ScriptableObject.CreateInstance<Tile>();
         TimeManager.OnCycleComplete += GrowPlantedCrops;
         TimeManager.OnCycleComplete += SaveCrops;
         if (GlobalVariables.ResumeGame)
         {
             LoadCrops();
         }
-    }
-
-    private void Awake()
-    {
-
     }
 
     //determina si hay un sprite de tierra arada en el tilemap
@@ -132,15 +125,7 @@ public class CropManager : MonoBehaviour
     {
         if (IsCropPlanted(pos) && cropData[pos].GrowthStage == cropData[pos].GrowthSprites.Length - 1)
         {
-            //TODO añadir una condicion para que dependiendo del cultivo recogido, de el item correspondiente
-            if (cropData[pos].Type == CropTileData.CropType.PUMPKIN)
-            {
-                InventoryManager.instance.AddItem(InventoryManager.instance.itemList[1]);
-            }
-            else
-            {
-                InventoryManager.instance.AddItem(InventoryManager.instance.itemList[5]);
-            }
+            InventoryManager.instance.AddItem(InventoryManager.instance.itemDictionary[CropToType(cropData[pos].Type)]);
             RemoveCrop(pos);
         }
     }
@@ -346,5 +331,29 @@ public class CropManager : MonoBehaviour
             Debug.Log($"Error al actualizar los tilemaps {ex.Message}");
         }
 
+    }
+
+    public static CropTileData.CropType TypeToCrop(Item.ItemType type)
+    {
+        CropTileData.CropType cropType = CropTileData.CropType.EMPTY;
+
+        if (Enum.TryParse(typeof(CropTileData.CropType), type.ToString().Replace("Seed",""), true, out object result))
+        {
+            cropType = (CropTileData.CropType)result;
+        }
+
+        return cropType;
+    }
+
+    public static Item.ItemType CropToType(CropTileData.CropType crop)
+    {
+        Item.ItemType type = Item.ItemType.Empty;
+
+        if (Enum.TryParse(typeof(Item.ItemType), crop.ToString(), true, out object result))
+        {
+            type = (Item.ItemType)result;
+        }
+
+        return type;
     }
 }

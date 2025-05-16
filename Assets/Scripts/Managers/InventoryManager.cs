@@ -1,3 +1,6 @@
+using Assets;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -8,8 +11,11 @@ public class InventoryManager : MonoBehaviour
     public int maxStackedItems;
     public InventorySlot[] inventorySlots;
     public GameObject inventoryItemPrefab;
+    public GameObject inventoryButton;
+    public Dictionary<Item.ItemType, Item> itemDictionary = new Dictionary<Item.ItemType, Item>();
 
     int selectedSlot = -1;
+
 
     private void Update()
     {
@@ -25,6 +31,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
+        FillItemDictionary();
         maxStackedItems = 24;
         instance = this;
         ChangeSelectedSlot(0);
@@ -111,6 +118,14 @@ public class InventoryManager : MonoBehaviour
             return item;
         }
         return null;
+    }
+
+    private void FillItemDictionary()
+    {
+        foreach (Item item in itemList)
+        {
+            itemDictionary.Add(item.type,item);
+        }
     }
 
     public void SaveInventory()

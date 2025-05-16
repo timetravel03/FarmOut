@@ -1,6 +1,7 @@
 using Assets;
 using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -38,7 +39,9 @@ public class PlayerController : MonoBehaviour
     private ToolMode[] tools = new ToolMode[] { ToolMode.SWORD, ToolMode.HOE, ToolMode.WATERING };
 
     public Item addItemTest;
-    public bool LockFireEvent { get; set; }
+
+    public static bool LockFireEvent = false;
+    public static PlayerController instance;
 
     private void OnGUI()
     {
@@ -54,6 +57,8 @@ public class PlayerController : MonoBehaviour
         GUI.Label(new Rect(x, y + 45, 200, 50), $"Int Direction: {animator.GetInteger("direction")}");
         GUI.Label(new Rect(x, y + 60, 200, 50), $"Player Location: X: {transform.position.x * 100:F0} Y: {transform.position.y * 100:F0}");
         GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: {toolMode.ToString()}");
+        GUI.Label(new Rect(x, y + 120, 200, 50), $"Clickable: {GlobalVariables.CursorOverClickableObject}");
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -66,6 +71,8 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         toolIndex = 0;
+
+        instance = this;
     }
 
     // Update is called once per frame
@@ -108,9 +115,8 @@ public class PlayerController : MonoBehaviour
         }
         Animate();
 
-        // prueba de concepto
-
-        if (InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Plant || InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Harvest)
+        // TODO revisar comprobación
+        if (InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Till || InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Plant)
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = true;
             cropHelper.transform.position = farmlandTilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f, 0.08f);
@@ -217,34 +223,34 @@ public class PlayerController : MonoBehaviour
     // activa el trigger de la anim
     void OnFire()
     {
-        if (!LockFireEvent)
+        if (!GlobalVariables.CursorOverClickableObject)
         {
-            if (SceneManager.GetActiveScene().name != "Home")
+            switch (InventoryManager.instance.GetSelectedItem(false)?.actionType)
             {
-                switch (InventoryManager.instance.GetSelectedItem(false)?.actionType)
-                {
-                    case Item.ActionType.Attack:
-                        animator.SetTrigger("swordAttack");
-                        break;
-                    case Item.ActionType.Harvest:
-                        if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.Hoe)
-                        {
-                            animator.SetTrigger("hoeAction");
-                        }
-                        else if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.WaterCan)
-                        {
-                            animator.SetTrigger("waterAction");
-                        }
-                        break;
-                    case Item.ActionType.Break:
-                        animator.SetTrigger("pickAction");
-                        break;
-                    case Item.ActionType.Plant:
+                case Item.ActionType.Attack:
+                    animator.SetTrigger("swordAttack");
+                    break;
+                case Item.ActionType.Harvest:
+
+                    break;
+                case Item.ActionType.Break:
+                    animator.SetTrigger("pickAction");
+                    break;
+                case Item.ActionType.Plant:
+                    animator.SetTrigger("hoeAction");
+                    break;
+                case Item.ActionType.Till:
+                    if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.Hoe)
+                    {
                         animator.SetTrigger("hoeAction");
-                        break;
-                    default:
-                        break;
-                }
+                    }
+                    else if (InventoryManager.instance.GetSelectedItem(false)?.type == Item.ItemType.WaterCan)
+                    {
+                        animator.SetTrigger("waterAction");
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -256,24 +262,9 @@ public class PlayerController : MonoBehaviour
         Vector3Int tempPosition = LocateCurrentFacingTile();
         Item selectedItem = InventoryManager.instance.GetSelectedItem(false);
 
-        // TODO hacer algo con esto
-        switch (selectedItem?.type)
+        switch (selectedItem?.actionType)
         {
-            case Item.ItemType.Hoe:
-                if (Input.GetKey(KeyCode.LeftShift))
-                {
-                    if (!cropManager.RemoveCrop(tempPosition))
-                    {
-                        cropManager.RemoveFarmland(tempPosition);
-                    }
-                }
-                else
-                {
-                    cropManager.HarvestCrop(tempPosition);
-                    cropManager.CreateFarmland(tempPosition);
-                }
-                break;
-            case Item.ItemType.Sword:
+            case Item.ActionType.Attack:
                 switch (facingDirection)
                 {
                     case Direction.UP:
@@ -294,35 +285,33 @@ public class PlayerController : MonoBehaviour
                         break;
                 }
                 break;
-            case Item.ItemType.Pickaxe:
-                break;
-            case Item.ItemType.WaterCan:
-                cropManager.WaterTile(tempPosition);
-                //cropManager.GrowPlantedCrops();
-                break;
-            case Item.ItemType.PumpkinSeed:
-                if (cropManager.PlantCrop(tempPosition, CropTileData.CropType.PUMPKIN))
+            case Item.ActionType.Plant:
+                if (cropManager.PlantCrop(tempPosition, CropManager.TypeToCrop(selectedItem.type)))
                 {
                     // reduce el numero de objetos
                     InventoryManager.instance.GetSelectedItem(true);
                 }
                 break;
-            case Item.ItemType.Pumpkin:
-                break;
-            case Item.ItemType.TomatoSeed:
-                break;
-            case Item.ItemType.Tomato:
-                break;
-            case Item.ItemType.CarrotSeed:
-                if (cropManager.PlantCrop(tempPosition, CropTileData.CropType.CARROT))
+            case Item.ActionType.Till:
+                if (selectedItem.type == Item.ItemType.Hoe)
                 {
-                    // reduce el numero de objetos
-                    InventoryManager.instance.GetSelectedItem(true);
+                    if (Input.GetKey(KeyCode.LeftShift))
+                    {
+                        if (!cropManager.RemoveCrop(tempPosition))
+                        {
+                            cropManager.RemoveFarmland(tempPosition);
+                        }
+                    }
+                    else
+                    {
+                        cropManager.HarvestCrop(tempPosition);
+                        cropManager.CreateFarmland(tempPosition);
+                    }
                 }
-                break;
-            case Item.ItemType.Carrot:
-                break;
-            case Item.ItemType.Potato:
+                else if (selectedItem.type == Item.ItemType.WaterCan)
+                {
+                    cropManager.WaterTile(tempPosition);
+                }
                 break;
             default:
                 break;

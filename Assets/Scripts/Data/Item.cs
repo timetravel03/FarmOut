@@ -10,8 +10,8 @@ using UnityEngine.Tilemaps;
 [CreateAssetMenu(menuName = "Scriptable object/Ttem")]
 public class Item : ScriptableObject
 {
-    public enum ItemType { Hoe, Sword, Pickaxe, WaterCan, PumpkinSeed, Pumpkin, TomatoSeed, Tomato, CarrotSeed, Carrot, Potato  }
-    public enum ActionType { Plant, Harvest, Attack, Break }
+    public enum ItemType { Hoe, Sword, Pickaxe, WaterCan, PumpkinSeed, Pumpkin, TomatoSeed, Tomato, CarrotSeed, Carrot, Potato, PotatoSeed, Empty }
+    public enum ActionType { Plant, Harvest, Attack, Break, Till }
 
     [Header("Gameplay")]
     public TileBase tile;

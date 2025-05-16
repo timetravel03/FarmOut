@@ -86,6 +86,7 @@ public class TimeManager : MonoBehaviour
     {
         deltaTimer = 0f;
         GlobalVariables.LockPlayerMovement = false;
+        PlayerController.LockFireEvent = false;
     }
 
     private void FadeToBlack()
