@@ -137,3 +137,21 @@ Añadí una función que convierte el tipo de item (si es un cultivo) al tipo de
 Organicé un los scripts en carpetas.
 Me di cuenta de que estaba usando los sprites equivocados para representar las semillas en el inventario, los que estaba usando debían ser parte de los sprites de crecimiento (concretamente la primera fase) así que cambie los del inventario y los otros los añadi a los sprites de crecimiento.
 Descubrí un bug que impide que los objetos que se pueden acumular se muevan a otras celdas (no se produce el evento OnDrop del espacio del inventario), queda pendiente.
+
+### 17 de Mayo
+Solucioné el bug que impedía cambiar de hueco de inventario a los objetos que se podían acumular, resulta que era porque los textos que usaba como contador en el prefab del objeto estaban puestos como raycast target, e interceptaban el evento de OnDrop del hueco del inventario.
+
+Implementé la persistencia de datos del inventario (de nuevo con archivos de texto). Fue algo más tediosa que la de los cultivos debido a que lo platee usando una vez más un diccionario y usando de claves Vector3 normal, es decir la posicion de cada hueco de inventario.
+
+La primera vez que no me funcionó mi primera hipotesis fue que estaba cogiendo la posición del transform de cada elemento, lo cual no me valía porque me dí cuenta de que era la posición del hueco en el mundo y no en la pantalla, después de investigar un poco encontré esta solución:
+```c#
+        canvas.worldCamera.WorldToScreenPoint(slot.transform.position)
+```
+Siendo el canvas la referecia al canvas donde se encotraba mi inventario y slot el hueco del inventario.
+
+La segunda vez que no funcionó hize debugging y vi que todos los huecos tenian la mismas coordenadas, tuve que usar un IEnumerator para ejecutar una corrutina que esperase hasta que se terminase el frame actual, para que el inventario se cargara correctamente, ya que antes la actualización del inventario la realizaba en Start.
+
+Después de solucionar esto me encotré con el problema de que la comparación de Vector3 a la hora de cargar fallaba, por la imprecisión del float, asi que tuve que agregar un rango de tolerancia de la siguiente forma:
+```c#
+        Vector3.Distance(slotPosition, pair.Key) < .001f
+```

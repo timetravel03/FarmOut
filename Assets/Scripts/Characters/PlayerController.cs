@@ -116,7 +116,8 @@ public class PlayerController : MonoBehaviour
         Animate();
 
         // TODO revisar comprobación
-        if (InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Till || InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Plant)
+        if (InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Till 
+            || InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Plant)
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = true;
             cropHelper.transform.position = farmlandTilemap.CellToWorld(LocateCurrentFacingTile()) + new Vector3(0.08f, 0.08f);

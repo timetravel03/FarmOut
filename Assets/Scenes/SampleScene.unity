@@ -56360,6 +56360,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2091570978}
   m_SourcePrefab: {fileID: 100100000, guid: 0c877cd31351c8440ad8b7fbcc0d4342, type: 3}
+--- !u!223 &4551052997878933125 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 1952060059445878056, guid: 0c877cd31351c8440ad8b7fbcc0d4342, type: 3}
+  m_PrefabInstance: {fileID: 4551052997878933124}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5097352751114028737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56452,6 +56457,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3170991044335863879, guid: 3ab9dd8ccfc0b7848a6d00e20476dc65, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 4551052997878933125}
     - target: {fileID: 3170991044335863879, guid: 3ab9dd8ccfc0b7848a6d00e20476dc65, type: 3}
       propertyPath: inventoryButton
       value: 
@@ -56808,6 +56817,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
+      propertyPath: addItemTest
+      value: 
+      objectReference: {fileID: 11400000, guid: 3ae3e02aeaf8eaa4ebdf8151844b1728, type: 2}
     - target: {fileID: 1819212145768670, guid: 3c4b3df0062b84a47a1892ee9d765086, type: 3}
       propertyPath: cropManager
       value: 

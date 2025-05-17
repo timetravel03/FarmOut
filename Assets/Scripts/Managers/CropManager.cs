@@ -232,11 +232,11 @@ public class CropManager : MonoBehaviour
                         values = cropLine.Split(';');
                         if (values.Length == 2)
                         {
-                            cropData.Add(VectorFromString(values[0]), null);
+                            cropData.Add(GlobalVariables.Vector3IntFromString(values[0]), null);
                         }
                         else if (values.Length > 2)
                         {
-                            Vector3Int v = VectorFromString(values[0]);
+                            Vector3Int v = GlobalVariables.Vector3IntFromString(values[0]);
                             CropTileData.CropType type = (CropTileData.CropType)Enum.Parse(typeof(CropTileData.CropType), values[2]);
                             int stage = int.Parse(values[3]);
                             bool watered = bool.Parse(values[4]);
@@ -266,19 +266,7 @@ public class CropManager : MonoBehaviour
         }
     }
 
-    // convierte un string a un vector3int
-    private Vector3Int VectorFromString(string vector)
-    {
-        Vector3Int parsedVector;
-        string[] values;
-        string tempString;
-
-        tempString = vector.Substring(1, vector.Length - 2);
-        values = tempString.Split(',');
-        parsedVector = new Vector3Int(int.Parse(values[0].Trim()), int.Parse(values[1].Trim()), int.Parse(values[2].Trim()));
-
-        return parsedVector;
-    }
+    
 
     // obtiene el sprite correcto en función del tipo
     private Sprite[] GetCorrectSprites(CropTileData.CropType type)
@@ -314,7 +302,7 @@ public class CropManager : MonoBehaviour
             {
 
                 farmlandTilemap.SetTile(data.Key, farmlandRT);
-
+                decorationTilemap.SetTile(data.Key, null);
                 if (data.Value != null)
                 {
                     if (data.Value.Watered)
@@ -323,14 +311,12 @@ public class CropManager : MonoBehaviour
                     }
                     cropTilemap.SetTile(data.Key, data.Value.GetTile());
                 }
-
             }
         }
         catch (Exception ex)
         {
             Debug.Log($"Error al actualizar los tilemaps {ex.Message}");
         }
-
     }
 
     public static CropTileData.CropType TypeToCrop(Item.ItemType type)

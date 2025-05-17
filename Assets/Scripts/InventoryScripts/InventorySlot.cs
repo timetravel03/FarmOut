@@ -23,7 +23,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         image.color = defaultColor;
     }
 
-    // TODO averiguar por qué los objetos stackeables no producen este eventp (revisar video)
     public void OnDrop(PointerEventData eventData)
     {
         if (transform.childCount == 0)

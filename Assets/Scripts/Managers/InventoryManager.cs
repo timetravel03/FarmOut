@@ -1,6 +1,8 @@
 using Assets;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -13,9 +15,18 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryItemPrefab;
     public GameObject inventoryButton;
     public Dictionary<Item.ItemType, Item> itemDictionary = new Dictionary<Item.ItemType, Item>();
+    public Canvas canvas;
+
+
 
     int selectedSlot = -1;
+    private Dictionary<Vector3, ItemInfo> inventoryStructure = new Dictionary<Vector3, ItemInfo>();
 
+    private struct ItemInfo
+    {
+        public Item.ItemType itemType;
+        public int count;
+    }
 
     private void Update()
     {
@@ -35,21 +46,30 @@ public class InventoryManager : MonoBehaviour
         maxStackedItems = 24;
         instance = this;
         ChangeSelectedSlot(0);
-        foreach (Item item in startItems)
+        if (!GlobalVariables.ResumeGame)
         {
-            // trampilla
-            if (item.stackable)
+            foreach (Item item in startItems)
             {
-                for (int i = 0; i < 16; i++)
+                if (item.stackable)
+                {
+                    for (int i = 0; i < 16; i++)
+                    {
+                        AddItem(item);
+                    }
+                }
+                else
                 {
                     AddItem(item);
                 }
             }
-            else
-            {
-                AddItem(item);
-            }
         }
+        else
+        {
+            LoadInventory();
+        }
+        TimeManager.OnCycleComplete += SaveInventory;
+        // la carga del inventario debe esperar a que la interfaz esté completamente cargada
+        StartCoroutine(DelayInventoryUpdate());
     }
 
     void ChangeSelectedSlot(int newValue)
@@ -124,20 +144,114 @@ public class InventoryManager : MonoBehaviour
     {
         foreach (Item item in itemList)
         {
-            itemDictionary.Add(item.type,item);
+            itemDictionary.Add(item.type, item);
         }
     }
 
-    public void SaveInventory()
+    private void SaveInventory()
     {
+        ItemInfo itemInfo;
+        InventoryItem item;
+        string itemLine;
         try
         {
+            inventoryStructure.Clear();
+            // guardar la estructura del inventario
+            foreach (InventorySlot slot in inventorySlots)
+            {
+                if ((item = slot.GetComponentInChildren<InventoryItem>()) != null)
+                {
+                    itemInfo.itemType = item.item.type;
+                    itemInfo.count = item.count;
+                    inventoryStructure.Add(canvas.worldCamera.WorldToScreenPoint(slot.transform.position), itemInfo);
+                }
+            }
 
+            using (StreamWriter sw = new StreamWriter(Path.Combine(Application.persistentDataPath, "inventorydata.fmout"), false))
+            {
+                foreach (KeyValuePair<Vector3, ItemInfo> keyValuePair in inventoryStructure)
+                {
+                    // posicion del slot, tipo y cantidad
+                    itemLine = $"{keyValuePair.Key};{keyValuePair.Value.itemType.ToString()};{keyValuePair.Value.count}";
+                    sw.WriteLine(itemLine);
+                }
+            }
+            Debug.Log($"Inventario guardado en {Path.Combine(Application.persistentDataPath, "inventorydata.fmout")}");
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
-
-            throw;
+            Debug.Log($"Error al guardar el invetario {ex.Message}");
         }
+    }
+
+    private void LoadInventory()
+    {
+        string itemLine;
+        string[] itemValues;
+        ItemInfo itemInfo;
+        try
+        {
+            using (StreamReader sr = new StreamReader(Path.Combine(Application.persistentDataPath, "inventorydata.fmout")))
+            {
+                while ((itemLine = sr.ReadLine()) != null)
+                {
+                    if (itemLine.Trim() != "")
+                    {
+                        itemValues = itemLine.Split(';');
+                        Vector3 position = GlobalVariables.VectorFromString(itemValues[0]);
+                        itemInfo.itemType = (Item.ItemType)Enum.Parse(typeof(Item.ItemType), itemValues[1]);
+                        itemInfo.count = int.Parse(itemValues[2]);
+
+                        inventoryStructure.Add(position, itemInfo);
+                    }
+                }
+            }
+
+        }
+        catch (System.Exception ex)
+        {
+            Debug.Log($"Error al cargar el invetario {ex.Message}");
+        }
+    }
+
+    IEnumerator DelayInventoryUpdate()
+    {
+        yield return new WaitForEndOfFrame();
+
+        UpdateInventory();
+    }
+
+    private void UpdateInventory()
+    {
+        Vector3 slotPosition;
+        Item item;
+        foreach (KeyValuePair<Vector3, ItemInfo> pair in inventoryStructure)
+        {
+            foreach (InventorySlot slot in inventorySlots)
+            {
+                slotPosition = canvas.worldCamera.WorldToScreenPoint(slot.transform.position);
+                if (Vector3.Distance(slotPosition, pair.Key) < .001f) // debido a la imprecision de float necesito una tolerancia más baja para comparar
+                {
+                    item = GetCorrectItem(pair.Value.itemType);
+                    SpawnNewItem(item, slot);
+                    for (int i = 0; i < pair.Value.count - 1; i++)
+                    {
+                        AddItem(item);
+                    }
+                }
+            }
+        }
+    }
+
+    private Item GetCorrectItem(Item.ItemType type)
+    {
+        foreach (Item item in itemList)
+        {
+            if (item.type == type)
+            {
+                return item;
+            }
+        }
+        return null;
     }
 }

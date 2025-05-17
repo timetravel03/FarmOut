@@ -16,7 +16,34 @@ public class GlobalVariables
     public static bool SaveFileExists()
     {
         FileInfo cropFile = new FileInfo(Path.Combine(Application.persistentDataPath, "cropdata.fmout"));
-        return cropFile.Exists;
+        FileInfo inventoryFile = new FileInfo(Path.Combine(Application.persistentDataPath, "inventorydata.fmout"));
+        return cropFile.Exists && inventoryFile.Exists;
     }
 
+    // convierte un string a un vector3int
+    public static Vector3Int Vector3IntFromString(string vector)
+    {
+        Vector3Int parsedVector;
+        string[] values;
+        string tempString;
+
+        tempString = vector.Substring(1, vector.Length - 2);
+        values = tempString.Split(',');
+        parsedVector = new Vector3Int(int.Parse(values[0].Trim()), int.Parse(values[1].Trim()), int.Parse(values[2].Trim()));
+
+        return parsedVector;
+    }
+
+    public static Vector3 VectorFromString(string vector)
+    {
+        Vector3 parsedVector;
+        string[] values;
+        string tempString;
+
+        tempString = vector.Substring(1, vector.Length - 2);
+        values = tempString.Split(',');
+        parsedVector = new Vector3(float.Parse(values[0].Trim().Replace('.',',')), float.Parse(values[1].Trim().Replace('.', ',')), float.Parse(values[2].Trim().Replace('.', ',')));
+
+        return parsedVector;
+    }
 }
