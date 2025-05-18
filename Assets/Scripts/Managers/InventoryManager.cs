@@ -230,7 +230,7 @@ public class InventoryManager : MonoBehaviour
             foreach (InventorySlot slot in inventorySlots)
             {
                 slotPosition = canvas.worldCamera.WorldToScreenPoint(slot.transform.position);
-                if (Vector3.Distance(slotPosition, pair.Key) < .001f) // debido a la imprecision de float necesito una tolerancia más baja para comparar
+                if (Vector3.Distance(slotPosition, pair.Key) < .01f) // debido a la imprecision de float necesito una tolerancia más baja para comparar
                 {
                     item = GetCorrectItem(pair.Value.itemType);
                     SpawnNewItem(item, slot);
