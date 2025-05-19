@@ -37,7 +37,6 @@ public class PlayerController : MonoBehaviour
     private string lastAttackDirection = "";
     private int toolIndex;
     private ToolMode[] tools = new ToolMode[] { ToolMode.SWORD, ToolMode.HOE, ToolMode.WATERING };
-
     public Item addItemTest;
 
     public static bool LockFireEvent = false;
@@ -56,7 +55,7 @@ public class PlayerController : MonoBehaviour
         GUI.Label(new Rect(x, y + 30, 200, 50), $"Last Attack Direction: {lastAttackDirection}");
         GUI.Label(new Rect(x, y + 45, 200, 50), $"Int Direction: {animator.GetInteger("direction")}");
         GUI.Label(new Rect(x, y + 60, 200, 50), $"Player Location: X: {transform.position.x * 100:F0} Y: {transform.position.y * 100:F0}");
-        GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: {toolMode.ToString()}");
+        GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: {GameObject.FindGameObjectsWithTag("Enemy").Length}");
         GUI.Label(new Rect(x, y + 120, 200, 50), $"Clickable: {GlobalVariables.CursorOverClickableObject}");
 
     }
@@ -78,24 +77,9 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (!SoundManager.Instance.ambientSource.isPlaying)
         {
-
-            if (toolIndex < tools.Length - 1)
-            {
-                toolIndex++;
-            }
-            else
-            {
-                toolIndex = 0;
-            }
-
-            toolMode = tools[toolIndex];
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            InventoryManager.instance.AddItem(addItemTest);
+            SoundManager.Instance.PlayAmbient("Ambient", .2f);
         }
     }
 
@@ -116,7 +100,7 @@ public class PlayerController : MonoBehaviour
         Animate();
 
         // TODO revisar comprobación
-        if (InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Till 
+        if (InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Till
             || InventoryManager.instance.GetSelectedItem(false)?.actionType == Item.ActionType.Plant)
         {
             cropHelper.GetComponent<SpriteRenderer>().enabled = true;
@@ -134,6 +118,11 @@ public class PlayerController : MonoBehaviour
         {
             if (movementInput != Vector2.zero)
             {
+                if (!SoundManager.Instance.sfxSource.isPlaying)
+                {
+                    SoundManager.Instance.Play("Step1", .2f);
+                }
+
                 // comprobamos si se puede mover en la direccion que indica el movimiento
                 bool success = TryMove(movementInput);
                 if (!success)
@@ -285,12 +274,14 @@ public class PlayerController : MonoBehaviour
                         lastAttackDirection = "RIGHT";
                         break;
                 }
+                SoundManager.Instance.Play("Tap", .3f);
                 break;
             case Item.ActionType.Plant:
                 if (cropManager.PlantCrop(tempPosition, CropManager.TypeToCrop(selectedItem.type)))
                 {
                     // reduce el numero de objetos
                     InventoryManager.instance.GetSelectedItem(true);
+                    SoundManager.Instance.Play("Bush2");
                 }
                 break;
             case Item.ActionType.Till:
@@ -302,16 +293,20 @@ public class PlayerController : MonoBehaviour
                         {
                             cropManager.RemoveFarmland(tempPosition);
                         }
+                        SoundManager.Instance.Play("Dirt");
                     }
                     else
                     {
                         cropManager.HarvestCrop(tempPosition);
                         cropManager.CreateFarmland(tempPosition);
+                        SoundManager.Instance.Play("Dirt");
                     }
                 }
                 else if (selectedItem.type == Item.ItemType.WaterCan)
                 {
                     cropManager.WaterTile(tempPosition);
+                    SoundManager.Instance.Play("Water");
+
                 }
                 break;
             default:

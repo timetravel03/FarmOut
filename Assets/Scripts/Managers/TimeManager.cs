@@ -18,7 +18,7 @@ public class TimeManager : MonoBehaviour
 
     private readonly GUIStyle debugGuiStyle = new GUIStyle();
 
-    private float dayLenght = 24f;
+    private float dayLenght = 64f;
     private bool goToSleep;
 
     private void Start()
@@ -45,7 +45,7 @@ public class TimeManager : MonoBehaviour
 
     private void DayTimer()
     {
-        if (deltaTimer >= dayLenght - 2f)
+        if (deltaTimer >= dayLenght - 10f)
         {
             reverse = true;
         }
@@ -70,17 +70,17 @@ public class TimeManager : MonoBehaviour
         spriteRenderer.color = new Color(1f, 1f, 1f, deltaTimer / dayLenght);
     }
 
-    private void OnGUI()
-    {
-        debugGuiStyle.fontSize = 12;
-        debugGuiStyle.fontStyle = FontStyle.Bold;
+    //private void OnGUI()
+    //{
+    //    debugGuiStyle.fontSize = 12;
+    //    debugGuiStyle.fontStyle = FontStyle.Bold;
 
-        float x = 10;
-        float y = 10;
+    //    float x = 10;
+    //    float y = 10;
 
-        GUI.Label(new Rect(x, y + 90, 200, 50), $"Day Timer: {deltaTimer.ToString()}");
-        GUI.Label(new Rect(x, y + 105, 200, 50), $"DayTime: {DayTime.ToString()}");
-    }
+    //    GUI.Label(new Rect(x, y + 90, 200, 50), $"Day Timer: {deltaTimer.ToString()}");
+    //    GUI.Label(new Rect(x, y + 105, 200, 50), $"DayTime: {DayTime.ToString()}");
+    //}
 
     public static void RestartDay()
     {

@@ -1,15 +1,16 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventoryButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventoryButton : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
 {
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerClick(PointerEventData eventData)
     {
+        SoundManager.Instance.Play("Chest2");
         GlobalVariables.CursorOverClickableObject = true;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        GlobalVariables.CursorOverClickableObject = false;
+        GlobalVariables.CursorOverClickableObject = true;
     }
 }

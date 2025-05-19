@@ -126,7 +126,6 @@ public class Enemy : MonoBehaviour
 
     }
 
-    // TODO
     private bool TryMove(Vector2 direction)
     {
 

@@ -16,11 +16,12 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryButton;
     public Dictionary<Item.ItemType, Item> itemDictionary = new Dictionary<Item.ItemType, Item>();
     public Canvas canvas;
+    public GameObject mainInventory;
 
 
 
     int selectedSlot = -1;
-    private Dictionary<Vector3, ItemInfo> inventoryStructure = new Dictionary<Vector3, ItemInfo>();
+    private Dictionary<int, ItemInfo> inventoryStructure = new Dictionary<int, ItemInfo>();
 
     private struct ItemInfo
     {
@@ -157,22 +158,22 @@ public class InventoryManager : MonoBehaviour
         {
             inventoryStructure.Clear();
             // guardar la estructura del inventario
-            foreach (InventorySlot slot in inventorySlots)
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-                if ((item = slot.GetComponentInChildren<InventoryItem>()) != null)
+                if ((item = inventorySlots[i].GetComponentInChildren<InventoryItem>()) != null)
                 {
                     itemInfo.itemType = item.item.type;
                     itemInfo.count = item.count;
-                    inventoryStructure.Add(canvas.worldCamera.WorldToScreenPoint(slot.transform.position), itemInfo);
+                    inventoryStructure.Add(i, itemInfo);
                 }
             }
 
             using (StreamWriter sw = new StreamWriter(Path.Combine(Application.persistentDataPath, "inventorydata.fmout"), false))
             {
-                foreach (KeyValuePair<Vector3, ItemInfo> keyValuePair in inventoryStructure)
+                foreach (KeyValuePair<int, ItemInfo> keyValuePair in inventoryStructure)
                 {
                     // posicion del slot, tipo y cantidad
-                    itemLine = $"{keyValuePair.Key};{keyValuePair.Value.itemType.ToString()};{keyValuePair.Value.count}";
+                    itemLine = $"{keyValuePair.Key.ToString()};{keyValuePair.Value.itemType.ToString()};{keyValuePair.Value.count}";
                     sw.WriteLine(itemLine);
                 }
             }
@@ -198,11 +199,11 @@ public class InventoryManager : MonoBehaviour
                     if (itemLine.Trim() != "")
                     {
                         itemValues = itemLine.Split(';');
-                        Vector3 position = GlobalVariables.VectorFromString(itemValues[0]);
+                        int index = int.Parse(itemValues[0]);
                         itemInfo.itemType = (Item.ItemType)Enum.Parse(typeof(Item.ItemType), itemValues[1]);
                         itemInfo.count = int.Parse(itemValues[2]);
 
-                        inventoryStructure.Add(position, itemInfo);
+                        inventoryStructure.Add(index, itemInfo);
                     }
                 }
             }
@@ -225,16 +226,15 @@ public class InventoryManager : MonoBehaviour
     {
         Vector3 slotPosition;
         Item item;
-        foreach (KeyValuePair<Vector3, ItemInfo> pair in inventoryStructure)
+        foreach (KeyValuePair<int, ItemInfo> pair in inventoryStructure)
         {
-            foreach (InventorySlot slot in inventorySlots)
+            for (int i = 0; i < inventorySlots.Length; i++)
             {
-                slotPosition = canvas.worldCamera.WorldToScreenPoint(slot.transform.position);
-                if (Vector3.Distance(slotPosition, pair.Key) < .01f) // debido a la imprecision de float necesito una tolerancia más baja para comparar
+                if (i == pair.Key) // debido a la imprecision de float necesito una tolerancia más baja para comparar
                 {
                     item = GetCorrectItem(pair.Value.itemType);
-                    SpawnNewItem(item, slot);
-                    for (int i = 0; i < pair.Value.count - 1; i++)
+                    SpawnNewItem(item, inventorySlots[i]);
+                    for (int j = 0; j < pair.Value.count - 1; j++)
                     {
                         AddItem(item);
                     }

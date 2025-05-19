@@ -17,14 +17,16 @@ public class SwordAttack : MonoBehaviour
     // posicion del collider
     Vector2 attackOffset;
 
+
     //no usado aún
     public enum AttackDirection { Left, Right, Up, Down }
     public AttackDirection attackDirection;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        attackOffset = transform.position;
+        attackOffset = transform.localPosition;
     }
 
     // Update is called once per frame
@@ -74,6 +76,7 @@ public class SwordAttack : MonoBehaviour
             Enemy enemy = collision.GetComponent<Enemy>();
             if (enemy != null)
             {
+                SoundManager.Instance.Play("SlimeHit");
                 enemy.TakeDamage(damage);
             }
         }

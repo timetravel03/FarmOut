@@ -155,3 +155,17 @@ Después de solucionar esto me encotré con el problema de que la comparación d
 ```c#
         Vector3.Distance(slotPosition, pair.Key) < .001f
 ```
+
+### 18 de Mayo
+Diseñé la portada principal
+
+### 19 de Mayo
+Me estaba dando problemas el sistema de guardado del inventario, imagino que por escalas y resoluciones que varían, la posicion del punto en la pantalla del slot del inventario varía también, asi que decidí usar los indices del array de huecos que ya tenía para indentificarlos.
+
+Revisé la gestion de la variable global que permite hacer click en un objeto para que cuando el inventario este activo no interactúe con nada más.
+
+Empecé a añadir los efectos de sonido, para lo cual cree un gameobject SoundManager con una clase estática y una clase interna Sound para acceder a los sonidos por nombre desde un diccionario, y un par de métodos para reproducirlos.
+
+Añadí un límite al número de slimes en pantalla (5)
+
+Cambié el funcionamiento de los slimes, les quité el trigger para que colisionen con el jugador y sean más una molestia que un enemigo a niveles prácticos.

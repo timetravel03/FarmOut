@@ -154,7 +154,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -217,7 +217,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -263,7 +263,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -526,7 +526,6 @@ MonoBehaviour:
   cropHelper: {fileID: 5450816900464058800}
   position: {x: 0, y: 0}
   farmlandTilemap: {fileID: 0}
-  cropTilemap: {fileID: 0}
   toolMode: 0
   addItemTest: {fileID: 11400000, guid: ba7a552069f58d445a45919421b34dfb, type: 2}
 --- !u!50 &2939017777256382798

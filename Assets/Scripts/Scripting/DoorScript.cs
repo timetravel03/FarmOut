@@ -32,7 +32,7 @@ public class DoorScript : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (CloseEnough())
+        if (CloseEnough() && !InventoryManager.instance.mainInventory.gameObject.activeSelf)
         {
             GlobalVariables.CursorOverClickableObject = true;
             UnityEngine.Cursor.SetCursor(bCursor, hotspot, cursorMode);
@@ -41,14 +41,18 @@ public class DoorScript : MonoBehaviour
                 DoorEvent?.Invoke();
                 GlobalVariables.GoToSleep = true;
                 Debug.Log("Click en puerta");
+                SoundManager.Instance.Play("Door", .3f);
             }
         }
     }
 
     private void OnMouseExit()
     {
-        GlobalVariables.CursorOverClickableObject = false;
-        UnityEngine.Cursor.SetCursor(yCursor, hotspot, cursorMode);
+        if (!InventoryManager.instance.mainInventory.gameObject.activeSelf)
+        {
+            GlobalVariables.CursorOverClickableObject = false;
+            UnityEngine.Cursor.SetCursor(yCursor, hotspot, cursorMode);
+        }
     }
 
     private bool CloseEnough()
