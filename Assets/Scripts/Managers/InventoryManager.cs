@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -38,6 +39,10 @@ public class InventoryManager : MonoBehaviour
             {
                 ChangeSelectedSlot(number - 1);
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            
         }
     }
 

@@ -42,23 +42,23 @@ public class PlayerController : MonoBehaviour
     public static bool LockFireEvent = false;
     public static PlayerController instance;
 
-    private void OnGUI()
-    {
-        debugGuiStyle.fontSize = 12;
-        debugGuiStyle.fontStyle = FontStyle.Bold;
+    //private void OnGUI()
+    //{
+    //    debugGuiStyle.fontSize = 12;
+    //    debugGuiStyle.fontStyle = FontStyle.Bold;
 
-        float x = 10;
-        float y = 10;
+    //    float x = 10;
+    //    float y = 10;
 
-        GUI.Label(new Rect(x, y, 200, 50), $"DEBUG:");
-        GUI.Label(new Rect(x, y + 15, 200, 50), $"Facing Direction: {facingDirection.ToString()}");
-        GUI.Label(new Rect(x, y + 30, 200, 50), $"Last Attack Direction: {lastAttackDirection}");
-        GUI.Label(new Rect(x, y + 45, 200, 50), $"Int Direction: {animator.GetInteger("direction")}");
-        GUI.Label(new Rect(x, y + 60, 200, 50), $"Player Location: X: {transform.position.x * 100:F0} Y: {transform.position.y * 100:F0}");
-        GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: {GameObject.FindGameObjectsWithTag("Enemy").Length}");
-        GUI.Label(new Rect(x, y + 120, 200, 50), $"Clickable: {GlobalVariables.CursorOverClickableObject}");
+    //    GUI.Label(new Rect(x, y, 200, 50), $"DEBUG:");
+    //    GUI.Label(new Rect(x, y + 15, 200, 50), $"Facing Direction: {facingDirection.ToString()}");
+    //    GUI.Label(new Rect(x, y + 30, 200, 50), $"Last Attack Direction: {lastAttackDirection}");
+    //    GUI.Label(new Rect(x, y + 45, 200, 50), $"Int Direction: {animator.GetInteger("direction")}");
+    //    GUI.Label(new Rect(x, y + 60, 200, 50), $"Player Location: X: {transform.position.x * 100:F0} Y: {transform.position.y * 100:F0}");
+    //    GUI.Label(new Rect(x, y + 75, 200, 50), $"Tool Mode: {GameObject.FindGameObjectsWithTag("Enemy").Length}");
+    //    GUI.Label(new Rect(x, y + 120, 200, 50), $"Clickable: {GlobalVariables.CursorOverClickableObject}");
 
-    }
+    //}
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
